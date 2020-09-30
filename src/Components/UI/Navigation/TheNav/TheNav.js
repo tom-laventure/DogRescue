@@ -3,8 +3,8 @@ import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import Button from 'react-bootstrap/Button'
 import { StoreContext } from '../../../../Store/StoreContext'
-import firebase from 'firebase'
 import { Link } from 'react-router-dom'
+import classes from './TheNav.module.css'
 
 const TheNav = () => {
     const {  fire, actions } = useContext(StoreContext)
@@ -16,10 +16,10 @@ const TheNav = () => {
     }
 
     return (
-        <Navbar bg="dark" variant="dark">
-            <Navbar.Brand><Link to="/">Poll</Link></Navbar.Brand>
+        <Navbar className={classes.nav} >
+            <Navbar.Brand><Link to="/">Dog Rescue</Link></Navbar.Brand>
             <Nav className="mr-auto"></Nav>
-            <Button variant="dark" onClick={() => logOut()}>Logout</Button>
+            <Button className={classes.navButton} variant="dark" onClick={() => logOut()}>Logout</Button>
         </Navbar>
     )
 }
