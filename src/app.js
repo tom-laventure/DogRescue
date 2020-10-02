@@ -4,6 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import { StoreContext } from './Store/StoreContext'
 import Layout from './hoc/Layout/Layout';
 import Auth from './Components/Auth/Auth';
+import ApplicantCreation from './Containers/ApplicantCreation/ApplicantCreation';
 
 
 const App = () => {
@@ -49,6 +50,7 @@ const App = () => {
         <Layout>
             {authView}
             <Switch>
+                <Route path="/create-user" component={ApplicantCreation}/>
                 <Route path="/" component={Homepage} />
             </Switch>
         </Layout>

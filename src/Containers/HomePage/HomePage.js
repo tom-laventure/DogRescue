@@ -10,16 +10,6 @@ const Homepage = () => {
     let type;
     let tempState;
 
-    switch (state.adminLevel) {
-        case (0):
-            ro = true;
-            break
-        case (1):
-            break;
-        case (2):
-            break
-    }
-
 
     const CreateDogCard = (info) => {
         switch (state.adminLevel) {
@@ -27,6 +17,7 @@ const Homepage = () => {
                 ro = true;
                 tempState = {
                     dogName: "Goofy",
+                    position: info.DogID,
                     theForm: [
                         {
                             type: "Text",
@@ -66,6 +57,46 @@ const Homepage = () => {
                     ro = false;
                     tempState = {
                         dogName: info.DogName,
+                        position: info.DogID,
+                        theForm: [
+                            {
+                                type: "Text",
+                                label: "Status",
+                                placeholder: info.Status,
+                                readOnly: ro
+                            },
+                            {
+                                type: "Text",
+                                label: "Adopters",
+                                placeholder: info.Adopters.name,
+                                readOnly: ro
+                            },
+                            {
+                                type: "Text",
+                                label: "Handler",
+                                placeholder: info.Handler.name,
+                                readOnly: ro
+                            },
+                            {
+                                type: "Date",
+                                label: "Inbound Date",
+                                placeholder: info.InboundDate,
+                                readOnly: ro
+                            },
+                            {
+                                type: "Text",
+                                label: "Flight Details",
+                                placeholder: info.FlightDetails,
+                                readOnly: ro
+                            }
+                        ]
+                    }
+                }
+                else {
+                    ro = true;
+                    tempState = {
+                        dogName: info.DogName,
+                        position: info.position,
                         theForm: [
                             {
                                 type: "Text",
@@ -102,13 +133,58 @@ const Homepage = () => {
                 }
                 break;
             case (2):
+                ro = false;
+                tempState = {
+                    dogName: info.DogName,
+                    position: info.position,
+                    theForm: [
+                        {
+                            type: "Text",
+                            label: "Status",
+                            placeholder: info.Status,
+                            readOnly: ro
+                        },
+                        {
+                            type: "Text",
+                            label: "Adopters",
+                            placeholder: info.Adopters.name,
+                            readOnly: ro
+                        },
+                        {
+                            type: "Text",
+                            label: "Handler",
+                            placeholder: info.Handler.name,
+                            readOnly: ro
+                        },
+                        {
+                            type: "Date",
+                            label: "Inbound Date",
+                            placeholder: info.InboundDate,
+                            readOnly: ro
+                        },
+                        {
+                            type: "Text",
+                            label: "Flight Details",
+                            placeholder: info.FlightDetails,
+                            readOnly: ro
+                        }
+                    ]
+                }
                 break
         }
+        return tempState
     }
 
     let tempDogList = [...state.dogList]
-    tempDogList.map((info, k) => {
-        return CreateDogCard(info)
+    let newDogList = tempDogList.map((dogInfo, k) => {
+        let dogForm = CreateDogCard(dogInfo)
+        return (
+            <div key={k} className={classes.dogCard}>
+                <div className={classes.position}>
+                    <p>{dogInfo.position}</p>
+                </div>
+                <DogCard info={dogForm} />
+            </div>)
     })
 
 
@@ -116,18 +192,7 @@ const Homepage = () => {
     return (
         <MainContainer>
             <div className={classes.dogList}>
-                <div className={classes.dogCard}>
-                    <div className={classes.position}>
-                        <p>1.</p>
-                    </div>
-                    <DogCard info={tempState} />
-                </div>
-                <div className={classes.dogCard}>
-                    <div className={classes.position}>
-                        <p>2.</p>
-                    </div>
-                    <DogCard info={tempState} />
-                </div>
+                {newDogList}
             </div>
         </MainContainer>
     )

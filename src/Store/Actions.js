@@ -9,6 +9,9 @@ export const useActions = (dispatch) => {
         dispatch({type: types.SET_ERROR, payload: item})
     }
 
+    const updateDogList = (item) => {
+        dispatch({type: types.UPDATE_DOGLIST, payload: item})
+    }
 
     return{
         setCurrentUser,

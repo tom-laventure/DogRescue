@@ -7,6 +7,7 @@ const initialState = {
     id: "122",
     dogList: [
         {
+            position: 1,
             DogName: "Goofy",
             Status: "Awaiting Arrival",
             Adopters: {
@@ -20,6 +21,22 @@ const initialState = {
             InboundDate: "2020-04-12",
             FlightDetails: "1425 Air Canada",
             DateUnkown: false
+        },
+        {
+            position: 2,
+            DogName: "Adam",
+            Status: "Awaiting Arrival",
+            Adopters: {
+                name: "Ken and Sam",
+                id: "123"
+            },
+            Handler: {
+                name:"Sam",
+                id: "312"
+            },
+            InboundDate: "2020-04-12",
+            FlightDetails: "1425 Air Canada",
+            DateUnkown: false
         }
     ]
 }
@@ -27,11 +44,10 @@ const initialState = {
 const types = {
     SET_USER: "SET_USER",
     SET_ERROR: "SET_ERROR",
+    UPDATE_DOGLIST: "UPDATE_DOGLIST"
 }
 
 const Reducer = (state = initialState, action) => {
-    let currentPoll;
-    let polls;
     switch (action.type) {
         case types.SET_USER:
             return {
@@ -42,6 +58,11 @@ const Reducer = (state = initialState, action) => {
             return {
                 ...state,
                 error: action.payload
+            }
+        case types.UPDATE_DOGLIST:
+            let tempDogList = [...state.dogList]
+            return{
+
             }
     }
     return state;

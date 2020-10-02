@@ -16,10 +16,11 @@ const TheNav = () => {
     }
 
     return (
-        <Navbar className={classes.nav} >
+        <Navbar  className={classes.nav} >
             <Navbar.Brand><Link to="/">Dog Rescue</Link></Navbar.Brand>
             <Nav className="mr-auto"></Nav>
-            <Button className={classes.navButton} variant="dark" onClick={() => logOut()}>Logout</Button>
+            <Nav.Link className={classes.navButton} href="/create-user">Create Applicant</Nav.Link>
+            <Nav.Link className={classes.navButton} variant="dark" onClick={() => logOut()}>Logout</Nav.Link>
         </Navbar>
     )
 }
