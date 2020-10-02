@@ -3,19 +3,30 @@ const it = "hello"
 const initialState = {
     user: null,
     error: null,
-    createGroup: false,
-    polls: {
-        currentPoll: [
-        ]
-    }
+    adminLevel: 1,
+    id: "122",
+    dogList: [
+        {
+            DogName: "Goofy",
+            Status: "Awaiting Arrival",
+            Adopters: {
+                name: "Ken and Sam",
+                id: "123"
+            },
+            Handler: {
+                name:"Jenny",
+                id: "122"
+            },
+            InboundDate: "2020-04-12",
+            FlightDetails: "1425 Air Canada",
+            DateUnkown: false
+        }
+    ]
 }
 
 const types = {
     SET_USER: "SET_USER",
     SET_ERROR: "SET_ERROR",
-    JOIN_CURRENT_POLL: "JOIN_CURRENT_POLL",
-    LEAVE_CURRENT_POLL: "LEAVE_CURRENT_POLL",
-    CREATE_GROUP: "CREATE_GROUP"
 }
 
 const Reducer = (state = initialState, action) => {
@@ -31,32 +42,6 @@ const Reducer = (state = initialState, action) => {
             return {
                 ...state,
                 error: action.payload
-            }
-        case types.JOIN_CURRENT_POLL:
-            currentPoll = [...state.polls.currentPoll]
-            currentPoll.push(action.payload)
-            polls = { ...state.polls }
-            polls.currentPoll = currentPoll
-            return {
-                ...state,
-                polls
-            }
-        case types.LEAVE_CURRENT_POLL:
-            currentPoll = [...state.polls.currentPoll]
-            const newPoll = currentPoll.filter((val) => {
-                console.log(action.payload.id == val.id)
-                return action.payload.id != val.id
-            })
-            polls = { ...state.polls }
-            polls.currentPoll = newPoll
-            return {
-                ...state,
-                polls
-            }
-        case types.CREATE_GROUP:
-            return {
-                ...state,
-                createGroup: action.payload
             }
     }
     return state;

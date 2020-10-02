@@ -9,23 +9,9 @@ export const useActions = (dispatch) => {
         dispatch({type: types.SET_ERROR, payload: item})
     }
 
-    const joinCurrentPoll = (item) => {
-        dispatch({type: types.JOIN_CURRENT_POLL, payload: item})
-    }
-
-    const leaveCurrentPoll = (item) => {
-        dispatch({type: types.LEAVE_CURRENT_POLL, payload: item})
-    }
-
-    const createGroup = (item) => {
-        dispatch({type: types.CREATE_GROUP, payload: item})
-    }
 
     return{
         setCurrentUser,
-        setErrorState,
-        joinCurrentPoll,
-        leaveCurrentPoll,
-        createGroup
+        setErrorState
     }
 }
