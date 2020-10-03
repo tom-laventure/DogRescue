@@ -15,7 +15,7 @@ const FormTemplate = (props) => {
     const setInputType = (info, iterator) => {
         switch (info.type) {
             case "Text":
-                return <input id={info.label} name={info.label} type={info.type} value={info.placeholder} readOnly={info.readOnly} className={classes.text} onChange={(e) => change(e, iterator)} />
+                return <input id={info.label} name={info.label} type={info.type} value={info.placeholder} readOnly={info.readOnly} className={props.customClasses.formText} onChange={(e) => change(e, iterator)} />
             case "DropDown":
                 let dropdownItems = info.options.map((i, k) => {
                     return <Dropdown.Item key={k} onClick={() => info.select(i)}>{i}</Dropdown.Item>
@@ -31,13 +31,13 @@ const FormTemplate = (props) => {
                     </Dropdown>
                 )
             default:
-                return <input id={info.label} name={info.label} type={info.type} value={info.placeholder} readOnly={info.readOnly} className={classes.text} onChange={(e) => change(e, iterator)} />
+                return <input id={info.label} name={info.label} type={info.type} value={info.placeholder} readOnly={info.readOnly} className={props.customClasses.formText} onChange={(e) => change(e, iterator)} />
         }
     }
-
+    console.log(props.customClasses)
     let formContent = tempState.map((info, iterator) => {
         return (
-            <div key={iterator} className={classes.container}>
+            <div key={iterator} className={props.customClasses.formContainer}>
                 <label htmlFor={info.label}>
                     {info.label}
                 </label>
@@ -47,7 +47,7 @@ const FormTemplate = (props) => {
     })
 
     return (
-        <form className={classes.form}>
+        <form className={props.customClasses.form}>
             {formContent}
         </form>
     )

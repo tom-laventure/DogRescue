@@ -18,7 +18,7 @@ const DogCard = (props) => {
                 <img src={img} width="150px" height="150px"/>
             </div>
             <div className={classes.cardDetails}>
-                <FormTemplate content={props.info.theForm}/>
+                <FormTemplate content={props.info.theForm} customClasses={classes}/>
             </div>
             <div className={classes.cardContact}>
                 {contactHandlerButton}

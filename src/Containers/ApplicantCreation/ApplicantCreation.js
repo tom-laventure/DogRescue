@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import DragAndDrop from '../../Components/UI/DragAndDrop/DragAndDrop'
 import FormTemplate from '../../Components/UI/FormTemplate/FormTemplate'
 import classes from './ApplicantCreation.module.css'
 
@@ -18,7 +19,7 @@ const ApplicantCreation = () => {
         },
         {
             type: "DropDown",
-            options:["Jenny","Tim","Sam"],
+            options: ["Jenny", "Tim", "Sam"],
             label: "Handler",
             select: (item) => {
                 let tempform = [...formInfo]
@@ -40,15 +41,22 @@ const ApplicantCreation = () => {
             placeholder: "",
             readOnly: false
         }
-    ])   
+    ])
 
+    const HandleDrop = (file) => {
+        console.log(file)
+    }
 
     return (
         <div>
-            <div>
-                <img />
+            <div className={classes.container}>
+                <DragAndDrop handleDrop={() => HandleDrop()}>
+                    <div className={classes.imageDrop}>
+
+                    </div>
+                </DragAndDrop>
+                <FormTemplate content={formInfo} customClasses={classes} />
             </div>
-            <FormTemplate content={formInfo}/>
         </div>
     )
 }

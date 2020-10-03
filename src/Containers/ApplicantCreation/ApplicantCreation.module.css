@@ -1,0 +1,11 @@
+.container{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.imageDrop{
+    height: 100px;
+    width: 100px;
+    background-color: azure;
+}

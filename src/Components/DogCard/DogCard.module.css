@@ -33,3 +33,20 @@
 .contactButton{
     font-size: 10px;
 }
+
+.formContainer{
+    display: flex;
+    flex-direction: column;
+    max-width: 150px;
+    margin: 5px 20px;
+}
+
+.formText{
+    text-align: center;
+}
+
+.form{
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 630px;
+}
