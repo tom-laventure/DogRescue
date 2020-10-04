@@ -5,6 +5,8 @@ import { StoreContext } from './Store/StoreContext'
 import Layout from './hoc/Layout/Layout';
 import Auth from './Components/Auth/Auth';
 import ApplicantCreation from './Containers/ApplicantCreation/ApplicantCreation';
+import UserAccount from './Containers/Account/UserAccount/UserAccount';
+import AdminAccount from './Containers/Account/AdminAccount/AdminAccount';
 
 
 const App = () => {
@@ -50,6 +52,8 @@ const App = () => {
         <Layout>
             {authView}
             <Switch>
+                <Route path="/admin-account" component={AdminAccount}/>
+                <Route path="/user-account" component={UserAccount}/>
                 <Route path="/create-user" component={ApplicantCreation}/>
                 <Route path="/" component={Homepage} />
             </Switch>

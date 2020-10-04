@@ -80,7 +80,6 @@ const Login = (props) => {
                     <a href="" onClick={(e) => props.switch("reset", e)}>Forgot Password</a>
                     <div className={classes.buttonContainer}>
                         <Button value="Login" type="submit" />
-                        <Button onClick={(e) => props.switch("register", e)} value="Register" type="button" />
                     </div>
                 </form>
             </FormPopUp>

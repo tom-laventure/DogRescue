@@ -24,10 +24,14 @@ const FormTemplate = (props) => {
     }
 
     const setInputType = (info, iterator) => {
+        let transparent;
+        if("transparent" in info){
+            transparent = c1.makebackgroundTransparent
+        }
         switch (info.type) {
             case "Text":
                 if(!("checkbox" in info)){
-                return <input id={info.label} name={info.label} type={info.type} value={info.placeholder} readOnly={info.readOnly} className={props.customClasses.formText} onChange={(e) => change(e, iterator)} />
+                return <input id={info.label} name={info.label} type={info.type} value={info.placeholder} readOnly={info.readOnly} className={classes.formText + " " + transparent} onChange={(e) => change(e, iterator)} />
                 }
                 else{
                     return(
@@ -66,11 +70,11 @@ const FormTemplate = (props) => {
                         </div>)
                 }
                 else{
-                    r = <input id={info.label} name={info.label} type={info.type} value={info.placeholder} readOnly={info.readOnly} className={classes.formText} onChange={(e) => change(e, iterator)} />
+                    r = <input id={info.label} name={info.label} type={info.type} value={info.placeholder} readOnly={info.readOnly} className={classes.formText + " " + transparent} onChange={(e) => change(e, iterator)} />
                 }
                 return r
             default:
-                return <input id={info.label} name={info.label} type={info.type} value={info.placeholder} readOnly={info.readOnly} className={classes.formText} onChange={(e) => change(e, iterator)} />
+                return <input id={info.label} name={info.label} type={info.type} value={info.placeholder} readOnly={info.readOnly} className={classes.formText + " " + transparent} onChange={(e) => change(e, iterator)} />
         }
     }
 

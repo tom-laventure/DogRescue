@@ -84,11 +84,11 @@ const ApplicantCreation = () => {
         <div className={classes.container}>
             <div className={classes.leftSide}>
                 <div className={classes.imageDrop}></div>
-                <FormTemplate content={secondFormInfo} customClasses={classes} template={1}/>
+                <FormTemplate content={secondFormInfo} template={1}/>
             </div>
             <div className={classes.rightSide}>
             <h2>Adoption Applicant Creation</h2>
-            <FormTemplate content={formInfo} customClasses={classes} template={1}/>
+            <FormTemplate content={formInfo} template={1}/>
             </div>
         </div>
     )

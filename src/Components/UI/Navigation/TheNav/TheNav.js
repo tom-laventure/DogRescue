@@ -19,6 +19,8 @@ const TheNav = () => {
         <Navbar  className={classes.nav} >
             <Navbar.Brand><Link to="/">Dog Rescue</Link></Navbar.Brand>
             <Nav className="mr-auto"></Nav>
+            <Nav.Link className={classes.navButton} href="/user-account">User Account</Nav.Link>
+            <Nav.Link className={classes.navButton} href="/admin-account">Admin Account</Nav.Link>
             <Nav.Link className={classes.navButton} href="/create-user">Create Applicant</Nav.Link>
             <Nav.Link className={classes.navButton} variant="dark" onClick={() => logOut()}>Logout</Nav.Link>
         </Navbar>

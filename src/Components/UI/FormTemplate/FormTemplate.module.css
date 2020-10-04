@@ -72,3 +72,8 @@
     font-size: 12px;
 }
 
+.makebackgroundTransparent{
+    background-color: #707070 !important;
+    color: #FFFFFF !important;
+    border: none;
+}
