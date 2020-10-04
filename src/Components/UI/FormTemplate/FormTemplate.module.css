@@ -9,9 +9,66 @@
     text-align: center;
 }
 
-.form{
+.dateCheckboxDiv{
     display: flex;
-    flex-wrap: wrap;
-    max-width: 630px;
+    /* max-width: 200px; */
+    font-size: 12px;
+    /* width: 140px; */
+}
+
+.date{
+    width: 140px
+}
+
+.dateWithCheckbox{
+    width: 100px;
+}
+
+.checkbox{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-left: 3px;
+}
+
+.checkbox p{
+    font-size: 10px;
+    margin: 0;
+    color: azure;
+}
+
+.checkbox span{
+    background-color: #707070;
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+
+.formContainer{
+    display: flex;
+    justify-content: space-between;
+    margin: 25px 20px;
+}
+
+.formContainer label{
+    background-color: #D9D9D9;
+    font-size: 12px;
+    width: 170px;
+    height: 30px;
+    text-align: center;
+    margin: 0 10px;
+    padding: 7px;
+}
+
+.dropDownButton{
+    height: 30px;
+    min-width: 200px;
+    font-size: 12px;
+}
+
+.formText{
+    min-width: 200px;
+    font-size: 12px;
 }
 
