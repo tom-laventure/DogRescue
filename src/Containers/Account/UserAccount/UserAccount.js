@@ -32,7 +32,7 @@ const UserAccount = () => {
             type: "Text",
             label: "Password",
             placeholder: "***********",
-            readOnly: false,
+            readOnly: true,
             transparent: true
             
         }
@@ -42,28 +42,28 @@ const UserAccount = () => {
             type: "Text",
             label: "Email",
             placeholder: "Ken@jobs.ca",
-            readOnly: false,
+            readOnly: true,
             transparent: true
         },
         {
             type: "Text",
             label: "Handler",
             placeholder: "Jenny",
-            readOnly: false,
+            readOnly: true,
             transparent: true
         },
         {
             type: "Text",
             label: "Dog Name",
             placeholder: "Goofy",
-            readOnly: false,
+            readOnly: true,
             transparent: true
         },
         {
             type: "Text",
             label: "Status",
             placeholder: "Awaiting Arrival",
-            readOnly: false,
+            readOnly: true,
             transparent: true
         },
 
@@ -73,14 +73,14 @@ const UserAccount = () => {
             type: "Text",
             label: "Inbound Date",
             placeholder: "10/12/2020",
-            readOnly: false,
+            readOnly: true,
             transparent: true
         },
         {
             type: "Text",
             label: "Flight Number",
             placeholder: "1025 Air Canada",
-            readOnly: false,
+            readOnly: true,
             transparent: true
         },
     ])
@@ -89,12 +89,12 @@ const UserAccount = () => {
         <div className={classes.container}>
             <div className={classes.leftSide}>
                 <div className={classes.imageDrop}></div>
-                <FormTemplate content={thirdForm} template={1} />
+                <FormTemplate content={thirdForm} template={1} change={setThirdForm} />
             </div>
             <div className={classes.rightSide}>
                 <h2>User Account</h2>
-                <FormTemplate content={firstForm} template={1} />
-                <FormTemplate content={secondForm} template={2} />
+                <FormTemplate content={firstForm} template={1} change={setFirstForm}/>
+                <FormTemplate content={secondForm} template={3} change={setSecondForm}/>
             </div>
         </div>
     )

@@ -1,0 +1,28 @@
+.formText{
+    text-align: center;
+    width: 120px;
+}
+
+.form{
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 800px;
+    justify-content: flex-start;
+}
+
+.formContainer{
+    display: flex;
+    justify-content: space-between;
+    margin: 0 10px 20px 20px;
+}
+
+.formContainer label{
+    background-color: #D9D9D9;
+    font-size: 12px;
+    width: 170px;
+    height: 30px;
+    text-align: center;
+    margin: 0 10px;
+    padding: 7px;
+}
+

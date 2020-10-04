@@ -1,46 +1,52 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { Dropdown, Form, InputGroup } from 'react-bootstrap'
 import { StoreContext } from '../../../Store/StoreContext'
-import c1 from './FormTemplate.module.css'
-import c2 from './SecondFormTemplate.module.css'
+import c1 from './FormStyles/FormTemplate.module.css'
+import c2 from './FormStyles/SecondFormTemplate.module.css'
+import c3 from './FormStyles/ThirdFormTemplate.module.css'
 
 const FormTemplate = (props) => {
     const { state, dispatch, actions, fire } = useContext(StoreContext)
-    const [tempState, setTempState] = useState([...props.content])
     let classes;
-    switch (props.template){
+    switch (props.template) {
         case 1:
-            classes= c1
+            classes = c1
             break;
         case 2:
             classes = c2
             break;
+        case 3:
+            classes = c3
+            break;
+        default:
+            classes = c1
+            break;
     }
-    
+
     const change = (e, i) => {
-        let temp = [...tempState]
+        let temp = [...props.content]
         temp[i].placeholder = e.target.value
-        setTempState(temp)
+        props.change(temp)
     }
 
     const setInputType = (info, iterator) => {
         let transparent;
-        if("transparent" in info){
+        if ("transparent" in info) {
             transparent = c1.makebackgroundTransparent
         }
         switch (info.type) {
             case "Text":
-                if(!("checkbox" in info)){
-                return <input id={info.label} name={info.label} type={info.type} value={info.placeholder} readOnly={info.readOnly} className={classes.formText + " " + transparent} onChange={(e) => change(e, iterator)} />
+                if (!("checkbox" in info)) {
+                    return <input id={info.label} name={info.label} type={info.type} value={info.placeholder} readOnly={info.readOnly} className={classes.formText + " " + transparent} onChange={(e) => change(e, iterator)} />
                 }
-                else{
-                    return(
+                else {
+                    return (
                         <div className={classes.dateCheckboxDiv}>
-                        <input id={info.label} name={info.label} type={info.type} value={info.placeholder} readOnly={info.readOnly} className={classes.date} onChange={(e) => change(e, iterator)} />
-                        <InputGroup className={classes.checkbox}>
-                            <p>Date Unnown</p>
-                            <InputGroup.Checkbox onChange={(e) => info.checkBoxClick(e)}/>
-                        </InputGroup>
+                            <input id={info.label} name={info.label} type={info.type} value={info.placeholder} readOnly={info.readOnly} className={classes.date} onChange={(e) => change(e, iterator)} />
+                            <InputGroup className={classes.checkbox}>
+                                <p>Date Unnown</p>
+                                <InputGroup.Checkbox onChange={(e) => info.checkBoxClick(e)} />
+                            </InputGroup>
                         </div>
                     )
                 }
@@ -60,16 +66,16 @@ const FormTemplate = (props) => {
                 )
             case "Date":
                 let r;
-                if(info.checkbox){
+                if (info.checkbox) {
                     r = (<div className={classes.dateCheckboxDiv}>
                         <input id={info.label} name={info.label} type={info.type} value={info.placeholder} readOnly={info.readOnly} className={classes.date} onChange={(e) => change(e, iterator)} />
                         <InputGroup className={classes.checkbox}>
                             <p>Date Unnown</p>
-                            <InputGroup.Checkbox onChange={(e) => info.checkBoxClick(e)}/>
+                            <InputGroup.Checkbox onChange={(e) => info.checkBoxClick(e)} />
                         </InputGroup>
-                        </div>)
+                    </div>)
                 }
-                else{
+                else {
                     r = <input id={info.label} name={info.label} type={info.type} value={info.placeholder} readOnly={info.readOnly} className={classes.formText + " " + transparent} onChange={(e) => change(e, iterator)} />
                 }
                 return r
@@ -78,7 +84,7 @@ const FormTemplate = (props) => {
         }
     }
 
-    let formContent = tempState.map((info, iterator) => {
+    let formContent = props.content.map((info, iterator) => {
         return (
             <div key={iterator} className={classes.formContainer}>
                 <label htmlFor={info.label}>

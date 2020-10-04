@@ -6,19 +6,21 @@ import DogCard from '../../Components/DogCard/DogCard'
 
 const Homepage = () => {
     const { state, dispatch, actions, fire } = useContext(StoreContext)
-    let ro;
-    let type;
-    let tempState;
+    const [dogCardList, setDogCardList] = useState()
+    useEffect(() => {
+        setDogList()
+    }, [state])
 
+    let ro;
+    let tempState;
+    let tempDogList;
+    let newDogList;
 
     const CreateDogCard = (info) => {
         switch (state.adminLevel) {
             case (0):
                 ro = true;
-                tempState = {
-                    dogName: "Goofy",
-                    position: info.DogID,
-                    theForm: [
+                tempState = [
                         {
                             type: "Text",
                             label: "Status",
@@ -50,15 +52,11 @@ const Homepage = () => {
                             readOnly: ro
                         }
                     ]
-                }
                 break
             case (1):
                 if (state.id === info.Handler.id) {
                     ro = false;
-                    tempState = {
-                        dogName: info.DogName,
-                        position: info.DogID,
-                        theForm: [
+                    tempState = [
                             {
                                 type: "Text",
                                 label: "Status",
@@ -90,14 +88,10 @@ const Homepage = () => {
                                 readOnly: ro
                             }
                         ]
-                    }
                 }
                 else {
                     ro = true;
-                    tempState = {
-                        dogName: info.DogName,
-                        position: info.position,
-                        theForm: [
+                    tempState = [
                             {
                                 type: "Text",
                                 label: "Status",
@@ -129,15 +123,11 @@ const Homepage = () => {
                                 readOnly: ro
                             }
                         ]
-                    }
                 }
                 break;
             case (2):
                 ro = false;
-                tempState = {
-                    dogName: info.DogName,
-                    position: info.position,
-                    theForm: [
+                tempState = [
                         {
                             type: "Text",
                             label: "Status",
@@ -169,30 +159,30 @@ const Homepage = () => {
                             readOnly: ro
                         }
                     ]
-                }
                 break
         }
         return tempState
     }
-
-    let tempDogList = [...state.dogList]
-    let newDogList = tempDogList.map((dogInfo, k) => {
-        let dogForm = CreateDogCard(dogInfo)
-        return (
-            <div key={k} className={classes.dogCard}>
-                <div className={classes.position}>
-                    <p>{dogInfo.position}</p>
-                </div>
-                <DogCard info={dogForm} />
-            </div>)
-    })
-
+    const setDogList = () => {
+        tempDogList = [...state.dogList]
+        newDogList = tempDogList.map((dogInfo, k) => {
+            let dogForm = CreateDogCard(dogInfo)
+            return (
+                <div key={k} className={classes.dogCard}>
+                    <div className={classes.position}>
+                        <p>{dogInfo.position}</p>
+                    </div>
+                    <DogCard info={dogForm} dogName={dogInfo.DogName} position={dogInfo.position} />
+                </div>)
+        })
+        setDogCardList(newDogList)
+    }
 
 
     return (
         <MainContainer>
             <div className={classes.dogList}>
-                {newDogList}
+                {dogCardList}
             </div>
         </MainContainer>
     )
