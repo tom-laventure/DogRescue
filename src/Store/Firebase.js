@@ -24,47 +24,47 @@ class Firebase {
     this.database.ref('users/' + id).set(data)
   }
 
-  createPoll = (data, res) => {
-    this.database.ref('polls').push(data).then((i) => {
-      this.database.ref('users/' + data.members[0].id).transaction(r => {
-        if(r){
-          if(!r.groups){
-            r.groups = [{id: i.key, name: data.name}]
-          }
-          else{
-            r.groups.push({id: i.key, name: data.name})
-          }
-        }
-        return r
-      })
-      res(i)
-    })
-  }
+  // createPoll = (data, res) => {
+  //   this.database.ref('polls').push(data).then((i) => {
+  //     this.database.ref('users/' + data.members[0].id).transaction(r => {
+  //       if(r){
+  //         if(!r.groups){
+  //           r.groups = [{id: i.key, name: data.name}]
+  //         }
+  //         else{
+  //           r.groups.push({id: i.key, name: data.name})
+  //         }
+  //       }
+  //       return r
+  //     })
+  //     res(i)
+  //   })
+  // }
 
-  joinPoll = (data, id) => {
-    this.database.ref('polls/' + id).transaction((poll) => {
-      if (poll) {
-        if(!poll.hasOwnProperty("members")){
-          poll.members = []
-        }
-        poll.members.push(data)
-      }
-      return poll
-    }).catch(err => {
-      console.log(err)
-    })
-  }
+  // joinPoll = (data, id) => {
+  //   this.database.ref('polls/' + id).transaction((poll) => {
+  //     if (poll) {
+  //       if(!poll.hasOwnProperty("members")){
+  //         poll.members = []
+  //       }
+  //       poll.members.push(data)
+  //     }
+  //     return poll
+  //   }).catch(err => {
+  //     console.log(err)
+  //   })
+  // }
 
-  leavePoll = (data, id) => {
-    this.database.ref('polls/' + id).transaction((poll) => {
-      if (poll) {
-        poll.members = poll.members.filter((i) => i.id !== data.id)
-      }
-      return poll
-    }).catch(err => {
-      console.log(err)
-    })
-  }
+  // leavePoll = (data, id) => {
+  //   this.database.ref('polls/' + id).transaction((poll) => {
+  //     if (poll) {
+  //       poll.members = poll.members.filter((i) => i.id !== data.id)
+  //     }
+  //     return poll
+  //   }).catch(err => {
+  //     console.log(err)
+  //   })
+  // }
 
 
 

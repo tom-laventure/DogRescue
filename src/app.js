@@ -7,25 +7,14 @@ import Auth from './Components/Auth/Auth';
 import ApplicantCreation from './Containers/ApplicantCreation/ApplicantCreation';
 import UserAccount from './Containers/Account/UserAccount/UserAccount';
 import AdminAccount from './Containers/Account/AdminAccount/AdminAccount';
+import MessagePage from './Containers/MessagePage/MessagePage';
 
 
 const App = () => {
-    const { state, actions, fire, axiosInstance } = useContext(StoreContext)
+    const { state, actions, fire } = useContext(StoreContext)
     const [auth, setAuth] = useState(false)
-    const req = axiosInstance.setRequestInterceptor(req => {
-        actions.setErrorState(null)
-        return req;
-    })
-    const res = axiosInstance.setResponseInterceptor(error => {
-        actions.setErrorState(null)
-    })
     let authView;
-    useEffect(() => {
-        return () => {
-            axiosInstance.removeReqInterceptor(req);
-            axiosInstance.removeResInterceptor(res);
-        }
-    }, [req, res])
+
 
 
     fire.authStateChange((user) => {
@@ -55,6 +44,7 @@ const App = () => {
                 <Route path="/admin-account" component={AdminAccount}/>
                 <Route path="/user-account" component={UserAccount}/>
                 <Route path="/create-user" component={ApplicantCreation}/>
+                <Route path="/message" component={MessagePage}/>
                 <Route path="/" component={Homepage} />
             </Switch>
         </Layout>

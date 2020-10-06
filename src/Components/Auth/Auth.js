@@ -9,7 +9,7 @@ import ResetPassword from './ResetPassword/ResetPassword'
 
 
 const Auth = (props) => {
-    const { state, dispatch, actions, fire, axiosInstance } = useContext(StoreContext)
+    const { state, dispatch, actions, fire } = useContext(StoreContext)
     const [view, setView] = useState("login")
     let theView;
 

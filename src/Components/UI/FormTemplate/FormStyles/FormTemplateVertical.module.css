@@ -70,3 +70,13 @@
     color: #FFFFFF !important;
     border: none;
 }
+
+.passwordWithLink{
+    max-width: 200px;
+}
+
+
+.passwordWithLink a{
+    color: #FFFFFF;
+    font-size: 12px;
+}

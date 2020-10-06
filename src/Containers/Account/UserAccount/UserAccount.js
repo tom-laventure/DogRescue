@@ -29,21 +29,23 @@ const UserAccount = () => {
             readOnly: false
         },
         {
-            type: "Text",
+            type: "Password",
             label: "Password",
             placeholder: "***********",
             readOnly: true,
-            transparent: true
+            transparent: true,
+            changePassword: true
             
         }
     ])
     const [secondForm, setSecondForm] = useState([
         {
-            type: "Text",
+            type: "Email",
             label: "Email",
             placeholder: "Ken@jobs.ca",
             readOnly: true,
-            transparent: true
+            transparent: true,
+            changeEmail: true
         },
         {
             type: "Text",

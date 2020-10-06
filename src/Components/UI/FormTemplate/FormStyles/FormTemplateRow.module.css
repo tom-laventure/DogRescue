@@ -1,6 +1,7 @@
 .formText{
-    text-align: center;
+    /* text-align: center; */
     width: 120px;
+    height: 30px
 }
 
 .form{
@@ -26,3 +27,12 @@
     padding: 7px;
 }
 
+.passwordWithLink{
+    max-width: 120px;
+}
+
+
+.passwordWithLink a{
+    color: #FFFFFF;
+    font-size: 12px;
+}

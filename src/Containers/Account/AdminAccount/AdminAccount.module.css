@@ -1,0 +1,32 @@
+.container{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 75px;
+}
+
+.container h2{
+    color: #FFFFFF;
+    margin-bottom: 3px;
+    width: 100%;
+    margin-left: 100px;
+}
+
+.imageDrop{
+    height: 150px;
+    width: 200px;
+    background-color: azure;
+}
+
+.rightSide{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.leftSide{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+

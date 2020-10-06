@@ -2,7 +2,6 @@ import React, { createContext, useReducer, useEffect, useState } from 'react'
 import { Reducer, initialState } from './Reducer'
 import { useActions } from './Actions'
 import Firebase from './Firebase'
-import axios from './Axios'
 import firebase from 'firebase'
 
 const StoreContext = createContext(initialState);
@@ -11,7 +10,6 @@ const StoreProvider = ({ children }) => {
     const [state, dispatch] = useReducer(Reducer, initialState);
     const actions = useActions(dispatch)
     const fire = new Firebase();
-    const axiosInstance = new axios();
     const database = firebase.database()
 
     useEffect(() => {
@@ -21,7 +19,7 @@ const StoreProvider = ({ children }) => {
 
 
     return (
-        <StoreContext.Provider value={{ state, dispatch, actions, fire, axiosInstance, database }}>
+        <StoreContext.Provider value={{ state, dispatch, actions, fire, database }}>
             {children}
         </StoreContext.Provider >
     )
