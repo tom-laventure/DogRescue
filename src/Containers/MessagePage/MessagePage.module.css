@@ -1,5 +1,22 @@
 .messageContainer{
     text-align: center;
-    max-width: 728px;
     margin: 0 auto;
+    width: 100%;
+    justify-content: center;
+    display: flex;
+    margin-top: 30px;
+    /* position: relative; */
+}
+
+.messageHeader{
+    /* position: absolute; */
+    background-color: #DBD6D6;
+    display: flex;
+    width: 100%;
+}
+
+.imageDrop{
+    height: 150px;
+    width: 200px;
+    background-color: azure;
 }

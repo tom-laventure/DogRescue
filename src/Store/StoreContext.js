@@ -10,7 +10,7 @@ const StoreProvider = ({ children }) => {
     const [state, dispatch] = useReducer(Reducer, initialState);
     const actions = useActions(dispatch)
     const fire = new Firebase();
-    const database = firebase.database()
+    // const database = firebase.database()
 
     useEffect(() => {
         console.log(state)
@@ -19,7 +19,7 @@ const StoreProvider = ({ children }) => {
 
 
     return (
-        <StoreContext.Provider value={{ state, dispatch, actions, fire, database }}>
+        <StoreContext.Provider value={{ state, dispatch, actions, fire }}>
             {children}
         </StoreContext.Provider >
     )

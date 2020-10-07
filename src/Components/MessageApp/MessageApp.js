@@ -1,10 +1,13 @@
 import React, { useRef, useState, useContext } from 'react';
 import { StoreContext } from '../../Store/StoreContext'
 import classes from './MessageApp.module.css'
+import Message from './Message/Message'
 
 const MessageApp = (props) => {
     const { state, dispatch, actions, fire } = useContext(StoreContext)
     const dummy = useRef();
+    let name = "Jenny"
+    let title = "Adoption Handler"
     // const messagesRef = firestore.collection('messages');
     // const query = messagesRef.orderBy('createdAt').limit(25);
 
@@ -31,9 +34,17 @@ const MessageApp = (props) => {
 
     return (
         <div className={classes.container}>
+            <div className={classes.messageHeader}>
+                <div className={classes.imageDrop}>
+                </div>
+                <div className={classes.contactInfo}>
+                    <h4>{name}</h4>
+                    <p>{title}</p>
+                </div>
+            </div>
             <div className={classes.main}>
 
-                {/* {messages && messages.map(msg => <ChatMessage key={msg.id} message={msg} />)} */}
+                {props.content && props.content.map((msg, k) => <Message key={k} message={msg} />)}
 
                 <span ref={dummy}></span>
 

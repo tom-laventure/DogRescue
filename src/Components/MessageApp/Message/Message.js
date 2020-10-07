@@ -1,9 +1,11 @@
-import React from 'react'
-
+import React, { useContext } from 'react'
+import { StoreContext } from '../../../Store/StoreContext';
+import classes from './Message.module.css'
 const Message = (props) => {
     const { text, uid, photoURL } = props.message;
-
-    const messageClass = uid === auth.currentUser.uid ? classes.sent : classes.recieved;
+    const {state} = useContext(StoreContext)
+    let messageClass
+    // const messageClass = uid === auth.currentUser.uid ? classes.sent : classes.recieved;
 
     return (
         <div className={`${classes.message} ${messageClass}`}>
