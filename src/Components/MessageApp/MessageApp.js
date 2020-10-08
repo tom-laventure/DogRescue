@@ -52,10 +52,9 @@ const MessageApp = (props) => {
 
             <form onSubmit={sendMessage}>
 
-                <input className={classes.input} value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="say something nice" />
+                <textarea className={classes.input} value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="say something nice" />
 
-                <button className={classes.button} type="submit" disabled={!formValue}>🕊️</button>
-
+                <button className={classes.button} type="submit" disabled={!formValue}>Send</button>
             </form>
         </div>)
 }

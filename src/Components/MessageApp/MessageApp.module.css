@@ -21,6 +21,11 @@
 
 .input {
   width: 80%;
+  background: #FFFFFF;
+  color: black;
+  outline: none;
+  border: none;
+  padding: 0 10px;
 }
 
 .messageHeader{
@@ -44,4 +49,20 @@
 
 .main{
   height: 100%;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.main::-webkit-scrollbar {
+  width: 0.25rem;
+}
+
+.main::-webkit-scrollbar-track {
+  background: #1e1e24;
+}
+
+.main::-webkit-scrollbar-thumb {
+  background: #6649b8;
 }

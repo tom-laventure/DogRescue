@@ -4,7 +4,7 @@ import classes from './Message.module.css'
 const Message = (props) => {
     const { text, uid, photoURL } = props.message;
     const {state} = useContext(StoreContext)
-    let messageClass
+    let messageClass = classes.sent
     // const messageClass = uid === auth.currentUser.uid ? classes.sent : classes.recieved;
 
     return (

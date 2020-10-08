@@ -13,8 +13,12 @@
   align-self: flex-end;
 }
 
+.received{
+  
+}
+
 .received p {
-  background: #e5e5ea;
+  background:#d9d9d9;
   color: black;
 }
 
