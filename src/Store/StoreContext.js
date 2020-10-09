@@ -19,7 +19,7 @@ const StoreProvider = ({ children }) => {
 
 
     return (
-        <StoreContext.Provider value={{ state, dispatch, actions, fire }}>
+        <StoreContext.Provider value={{ state, dispatch, actions, fire, firebase }}>
             {children}
         </StoreContext.Provider >
     )

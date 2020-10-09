@@ -1,32 +1,39 @@
-import React, { useRef, useState, useContext } from 'react';
+import React, { useRef, useState, useContext, useEffect } from 'react';
 import { StoreContext } from '../../Store/StoreContext'
 import classes from './MessageApp.module.css'
 import Message from './Message/Message'
+import 'firebase/firestore';
+
+import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 const MessageApp = (props) => {
-    const { state, dispatch, actions, fire } = useContext(StoreContext)
+    const { state, dispatch, actions, fire, firebase } = useContext(StoreContext)
+    const [formValue, setFormValue] = useState('')
+    const [theMessages, setTheMessages] = useState([])
+    const auth = firebase.auth();
+    const firestore = firebase.firestore();
+    const messagesRef = firestore.collection('Chat').doc('Groups').collection(auth.currentUser.uid)
+    const query = messagesRef.orderBy('createdAt').limit(25);
+    const [messages] = useCollectionData(query);
     const dummy = useRef();
     let name = "Jenny"
     let title = "Adoption Handler"
-    // const messagesRef = firestore.collection('messages');
+
+
     // const query = messagesRef.orderBy('createdAt').limit(25);
 
     // const [messages] = useCollectionData(query, { idField: 'id' });
-
-    const [formValue, setFormValue] = useState('');
-
+    // console.log(messages)
 
     const sendMessage = async (e) => {
         e.preventDefault();
+        const timestamp = firebase.firestore.FieldValue.serverTimestamp();
 
-        //   const { uid, photoURL } = auth.currentUser;
-
-        //   await messagesRef.add({
-        //     text: formValue,
-        //     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        //     uid,
-        //     photoURL
-        //   })
+        messagesRef.add({
+            text: formValue,
+            createdAt: timestamp,
+            uid: state.user.uid
+        })
 
         setFormValue('');
         dummy.current.scrollIntoView({ behavior: 'smooth' });
@@ -44,7 +51,7 @@ const MessageApp = (props) => {
             </div>
             <div className={classes.main}>
 
-                {props.content && props.content.map((msg, k) => <Message key={k} message={msg} />)}
+                {messages && messages.map((msg, k) => <Message key={k} message={msg} />)}
 
                 <span ref={dummy}></span>
 
@@ -52,7 +59,7 @@ const MessageApp = (props) => {
 
             <form onSubmit={sendMessage}>
 
-                <textarea className={classes.input} value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="say something nice" />
+                <textarea id="messageInput" className={classes.input} value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="say something nice" />
 
                 <button className={classes.button} type="submit" disabled={!formValue}>Send</button>
             </form>

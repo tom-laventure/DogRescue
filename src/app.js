@@ -14,8 +14,10 @@ const App = () => {
     const { state, actions, fire } = useContext(StoreContext)
     const [auth, setAuth] = useState(false)
     let authView;
-
-
+    let authorized;
+    if (state.user !== null) {
+        authorized = <Route path="/message" component={MessagePage} />
+    }
 
     fire.authStateChange((user) => {
         if (!user) {
@@ -41,10 +43,10 @@ const App = () => {
         <Layout>
             {authView}
             <Switch>
-                <Route path="/admin-account" component={AdminAccount}/>
-                <Route path="/user-account" component={UserAccount}/>
-                <Route path="/create-user" component={ApplicantCreation}/>
-                <Route path="/message" component={MessagePage}/>
+                <Route path="/admin-account" component={AdminAccount} />
+                <Route path="/user-account" component={UserAccount} />
+                <Route path="/create-user" component={ApplicantCreation} />
+                {authorized}
                 <Route path="/" component={Homepage} />
             </Switch>
         </Layout>
