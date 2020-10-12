@@ -43,7 +43,6 @@ const DogCard = (props) => {
         else {
             setSaveOrCancelButtons()
         }
-        console.log(changesToForm)
     }, [changesToForm])
 
     const ChangesToDogForm = (form) => {

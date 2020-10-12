@@ -2,21 +2,29 @@
   background-color: #F2F2F2;
   max-width: 80%;
   width: 60%;
-  height: 80%;
-  position: absolute;
+  height: 100%;
   top: 100px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 .container form {
   display: flex;
   width: 100%;
+  align-items: center;
 }
 
 .button {
   width: 20%;
+  max-height: 30px;
+  min-height: 30px;
+}
+
+.button:enabled{
+  background-color: #7184db;
+  color: #FFFFFF;
+  border: none;
 }
 
 .input {
@@ -26,12 +34,29 @@
   outline: none;
   border: none;
   padding: 0 10px;
+  border: 1px solid #DDDDDD;
+  min-height: 30px;
 }
+
+
+.input::-webkit-scrollbar {
+  width: 0.25rem;
+}
+
+.input::-webkit-scrollbar-track {
+  background: #FFFFFF;
+}
+
+.input::-webkit-scrollbar-thumb {
+  background: #a096bd;
+}
+
 
 .messageHeader{
   display: flex;
   width: 100%;
   border-bottom: 1px solid black;
+  max-height: 150px;
 }
 
 .imageDrop{
@@ -60,9 +85,9 @@
 }
 
 .main::-webkit-scrollbar-track {
-  background: #1e1e24;
+  background: #FFFFFF;
 }
 
 .main::-webkit-scrollbar-thumb {
-  background: #6649b8;
+  background: #a096bd;
 }

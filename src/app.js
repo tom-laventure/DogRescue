@@ -8,6 +8,7 @@ import ApplicantCreation from './Containers/ApplicantCreation/ApplicantCreation'
 import UserAccount from './Containers/Account/UserAccount/UserAccount';
 import AdminAccount from './Containers/Account/AdminAccount/AdminAccount';
 import MessagePage from './Containers/MessagePage/MessagePage';
+import Loading from './Containers/Loading/Loading';
 
 
 const App = () => {
@@ -16,7 +17,10 @@ const App = () => {
     let authView;
     let authorized;
     if (state.user !== null) {
-        authorized = <Route path="/message" component={MessagePage} />
+        authorized = MessagePage
+    }
+    else{
+        authorized = Loading
     }
 
     fire.authStateChange((user) => {
@@ -47,6 +51,7 @@ const App = () => {
                 <Route path="/user-account" component={UserAccount} />
                 <Route path="/create-user" component={ApplicantCreation} />
                 {authorized}
+                <Route path="/message" component={authorized} />
                 <Route path="/" component={Homepage} />
             </Switch>
         </Layout>

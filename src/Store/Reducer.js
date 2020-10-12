@@ -37,6 +37,38 @@ const initialState = {
             InboundDate: "2020-04-12",
             FlightDetails: "1425 Air Canada",
             DateUnkown: false
+        },
+        {
+            position: 1,
+            DogName: "Goofy",
+            Status: "Awaiting Arrival",
+            Adopters: {
+                name: "Ken and Sam",
+                id: "123"
+            },
+            Handler: {
+                name:"Jenny",
+                id: "122"
+            },
+            InboundDate: "2020-04-12",
+            FlightDetails: "1425 Air Canada",
+            DateUnkown: false
+        },
+        {
+            position: 1,
+            DogName: "Goofy",
+            Status: "Awaiting Arrival",
+            Adopters: {
+                name: "Ken and Sam",
+                id: "123"
+            },
+            Handler: {
+                name:"Jenny",
+                id: "122"
+            },
+            InboundDate: "2020-04-12",
+            FlightDetails: "1425 Air Canada",
+            DateUnkown: false
         }
     ]
 }

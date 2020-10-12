@@ -5,6 +5,7 @@ import Message from './Message/Message'
 import 'firebase/firestore';
 
 import { useCollectionData } from 'react-firebase-hooks/firestore';
+import TextareaAutosize from 'react-autosize-textarea/lib';
 
 const MessageApp = (props) => {
     const { state, dispatch, actions, fire, firebase } = useContext(StoreContext)
@@ -15,15 +16,14 @@ const MessageApp = (props) => {
     const messagesRef = firestore.collection('Chat').doc('Groups').collection(auth.currentUser.uid)
     const query = messagesRef.orderBy('createdAt').limit(25);
     const [messages] = useCollectionData(query);
-    const dummy = useRef();
+    const dummy = useRef(null);
     let name = "Jenny"
     let title = "Adoption Handler"
 
 
-    // const query = messagesRef.orderBy('createdAt').limit(25);
-
-    // const [messages] = useCollectionData(query, { idField: 'id' });
-    // console.log(messages)
+    useEffect(() => {
+        dummy.current.scrollIntoView({ behavior: 'smooth' });
+    }, [messages])
 
     const sendMessage = async (e) => {
         e.preventDefault();
@@ -34,11 +34,9 @@ const MessageApp = (props) => {
             createdAt: timestamp,
             uid: state.user.uid
         })
-
         setFormValue('');
-        dummy.current.scrollIntoView({ behavior: 'smooth' });
     }
-
+    
     return (
         <div className={classes.container}>
             <div className={classes.messageHeader}>
@@ -59,8 +57,9 @@ const MessageApp = (props) => {
 
             <form onSubmit={sendMessage}>
 
-                <textarea id="messageInput" className={classes.input} value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="say something nice" />
+                <TextareaAutosize id="messageInput" maxRows={5} className={classes.input} value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="say something nice"/>
 
+                {/* <textarea id="messageInput" className={classes.input} value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="say something nice" /> */}
                 <button className={classes.button} type="submit" disabled={!formValue}>Send</button>
             </form>
         </div>)
