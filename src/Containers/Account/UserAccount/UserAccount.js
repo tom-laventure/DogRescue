@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Button } from 'react-bootstrap'
 import FormTemplate from '../../../Components/UI/FormTemplate/FormTemplate'
 import classes from './UserAccount.module.css'
 
@@ -11,13 +12,13 @@ const UserAccount = () => {
             readOnly: false
         },
         {
-            type: "Number",
+            type: "Tel",
             label: "Phone Number",
             placeholder: "",
             readOnly: false
         },
         {
-            type: "Number",
+            type: "Tel",
             label: "Alternative Phone Number",
             placeholder: "",
             readOnly: false
@@ -35,7 +36,7 @@ const UserAccount = () => {
             readOnly: true,
             transparent: true,
             changePassword: true
-            
+
         }
     ])
     const [secondForm, setSecondForm] = useState([
@@ -88,17 +89,20 @@ const UserAccount = () => {
     ])
 
     return (
-        <div className={classes.container}>
+        <form className={classes.container} onSubmit={(e) => e.preventDefault()}>
             <div className={classes.leftSide}>
                 <div className={classes.imageDrop}></div>
                 <FormTemplate content={thirdForm} template={1} change={setThirdForm} />
             </div>
             <div className={classes.rightSide}>
                 <h2>User Account</h2>
-                <FormTemplate content={firstForm} template={1} change={setFirstForm}/>
-                <FormTemplate content={secondForm} template={3} change={setSecondForm}/>
+                <FormTemplate content={firstForm} template={1} change={setFirstForm} />
+                <FormTemplate content={secondForm} template={3} change={setSecondForm} />
+                <div className={classes.submitButtonContainer}>
+                    <Button type="submit" className={classes.submitButton} onClick={() => null}>Submit</Button>
+                </div>
             </div>
-        </div>
+        </form>
     )
 }
 

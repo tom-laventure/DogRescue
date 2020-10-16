@@ -8,56 +8,10 @@ const initialState = {
     dogList: [
         {
             position: 1,
+            UserID: '',
             DogName: "Goofy",
             Status: "Awaiting Arrival",
-            Adopters: {
-                name: "Ken and Sam",
-                id: "123"
-            },
-            Handler: {
-                name:"Jenny",
-                id: "122"
-            },
-            InboundDate: "2020-04-12",
-            FlightDetails: "1425 Air Canada",
-            DateUnkown: false
-        },
-        {
-            position: 2,
-            DogName: "Adam",
-            Status: "Awaiting Arrival",
-            Adopters: {
-                name: "Ken and Sam",
-                id: "123"
-            },
-            Handler: {
-                name:"Sam",
-                id: "312"
-            },
-            InboundDate: "2020-04-12",
-            FlightDetails: "1425 Air Canada",
-            DateUnkown: false
-        },
-        {
-            position: 1,
-            DogName: "Goofy",
-            Status: "Awaiting Arrival",
-            Adopters: {
-                name: "Ken and Sam",
-                id: "123"
-            },
-            Handler: {
-                name:"Jenny",
-                id: "122"
-            },
-            InboundDate: "2020-04-12",
-            FlightDetails: "1425 Air Canada",
-            DateUnkown: false
-        },
-        {
-            position: 1,
-            DogName: "Goofy",
-            Status: "Awaiting Arrival",
+            DogImg: 'gs://general-auth-4ef43.appspot.com/pup1.jpg',
             Adopters: {
                 name: "Ken and Sam",
                 id: "123"
@@ -101,3 +55,54 @@ const Reducer = (state = initialState, action) => {
 }
 
 export { Reducer, initialState, types }
+
+// setting up db
+// ,
+//         {
+//             position: 2,
+//             DogName: "Adam",
+//             Status: "Awaiting Arrival",
+//             Adopters: {
+//                 name: "Ken and Sam",
+//                 id: "123"
+//             },
+//             Handler: {
+//                 name:"Sam",
+//                 id: "312"
+//             },
+//             InboundDate: "2020-04-12",
+//             FlightDetails: "1425 Air Canada",
+//             DateUnkown: false
+//         },
+//         {
+//             position: 3,
+//             DogName: "Goofy",
+//             Status: "Awaiting Arrival",
+//             Adopters: {
+//                 name: "Ken and Sam",
+//                 id: "123"
+//             },
+//             Handler: {
+//                 name:"Jenny",
+//                 id: "122"
+//             },
+//             InboundDate: "2020-04-12",
+//             FlightDetails: "1425 Air Canada",
+//             DateUnkown: false
+//         },
+//         {
+//             position: 1,
+//             DogName: "Goofy",
+//             Status: "Awaiting Arrival",
+//             Adopters: {
+//                 name: "Ken and Sam",
+//                 id: "123"
+//             },
+//             Handler: {
+//                 name:"Jenny",
+//                 id: "122"
+//             },
+//             InboundDate: "2020-04-12",
+//             FlightDetails: "1425 Air Canada",
+//             DateUnkown: false
+//         }

@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import classes from './AdminAccount.module.css'
 import FormTemplate from '../../../Components/UI/FormTemplate/FormTemplate'
+import { Button } from 'react-bootstrap'
 
 const AdminAccount = () => {
     const [firstForm, setFirstForm] = useState([
@@ -11,13 +12,13 @@ const AdminAccount = () => {
             readOnly: false
         },
         {
-            type: "Number",
+            type: "Tel",
             label: "Phone Number",
             placeholder: "",
             readOnly: false
         },
         {
-            type: "Number",
+            type: "Tel",
             label: "Alternative Phone Number",
             placeholder: "",
             readOnly: false
@@ -55,6 +56,7 @@ const AdminAccount = () => {
             <div className={classes.rightSide}>
                 <h2>Admin Account</h2>
                 <FormTemplate content={firstForm} template={1} change={setFirstForm}/>
+                <Button onClick={() => null}>Submit</Button>
             </div>
         </div>
     )

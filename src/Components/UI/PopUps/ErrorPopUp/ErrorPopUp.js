@@ -14,7 +14,12 @@ const ErrorPopUp = (props) => {
 
     if (state.error) {
         hide = false
+        if('message' in state.error){
         message = state.error.error.message
+        }
+        else{
+            message = "Whoops, ran into an error"
+        }
     }
 
 

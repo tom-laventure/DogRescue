@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { Dropdown, Form, InputGroup } from 'react-bootstrap'
+import { Button, Dropdown, Form, InputGroup } from 'react-bootstrap'
 import { StoreContext } from '../../../Store/StoreContext'
 import c1 from './FormStyles/FormTemplateVertical.module.css'
 import c2 from './FormStyles/FormTemplateRowV2.module.css'
@@ -96,17 +96,20 @@ const FormTemplate = (props) => {
                 return p
             case "Email":
                 let e;
-                if("changeEmail" in info){
-                    e =  (<div className={classes.passwordWithLink}>
+                if ("changeEmail" in info) {
+                    e = (<div className={classes.passwordWithLink}>
                         <input id={info.label} name={info.label} type={info.type} value={info.placeholder} readOnly={info.readOnly} className={classes.formText + " " + transparent} onChange={(e) => change(e, iterator)} />
                         <a href="/Change-Password">Change Email</a>
                     </div>)
                 }
-                else{
+                else {
                     e = <input id={info.label} name={info.label} type={info.type} value={info.placeholder} readOnly={info.readOnly} className={classes.formText + " " + transparent} onChange={(e) => change(e, iterator)} />
                 }
                 return e
-                default:
+            case "Tel":
+                let t = <input type="tel" id="phone" name="phone" className={classes.formText + " " + transparent} pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required />
+                return t;
+            default:
                 return <input id={info.label} name={info.label} type={info.type} value={info.placeholder} readOnly={info.readOnly} className={classes.formText + " " + transparent} onChange={(e) => change(e, iterator)} />
         }
     }
@@ -123,9 +126,9 @@ const FormTemplate = (props) => {
     })
 
     return (
-        <form className={classes.form}>
+        <div className={classes.form}>
             {formContent}
-        </form>
+        </div>
     )
 }
 

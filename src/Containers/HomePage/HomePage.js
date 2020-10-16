@@ -8,221 +8,25 @@ import {setFormTemplateUser, setFormTemplateHandler} from '../../Resources/Funct
 const Homepage = () => {
     const { state, dispatch, actions, fire } = useContext(StoreContext)
     const [dogCardList, setDogCardList] = useState()
-    const [dogCardFormTemplate, setDogCardFormTemplate] = useState([
-        {
-            type: "Text",
-            label: "Status",
-            placeholder: "",
-            readOnly: true
-        },
-        {
-            type: "Text",
-            label: "Adopters",
-            placeholder: "",
-            readOnly: true
-        },
-        {
-            type: "Text",
-            label: "Handler",
-            placeholder: "",
-            readOnly: true
-        },
-        {
-            type: "Date",
-            label: "Inbound Date",
-            placeholder: "",
-            readOnly: true
-        },
-        {
-            type: "Text",
-            label: "Flight Details",
-            placeholder: "",
-            readOnly: true
-        }
-    ])
 
     useEffect(() => {
-        setDogList()
+        sortDogList()
     }, [state])
 
-    let ro;
-    let tempState;
-    let tempDogList;
+
     let newDogList;
 
-    const CreateDogCard = (info) => {
-        switch (state.adminLevel) {
-            case (0):
-                ro = true;
-                tempState = [
-                    {
-                        type: "Text",
-                        label: "Status",
-                        placeholder: "",
-                        readOnly: ro
-                    },
-                    {
-                        type: "Text",
-                        label: "Adopters",
-                        placeholder: "",
-                        readOnly: ro
-                    },
-                    {
-                        type: "Text",
-                        label: "Handler",
-                        placeholder: "",
-                        readOnly: ro
-                    },
-                    {
-                        type: "Date",
-                        label: "Inbound Date",
-                        placeholder: "",
-                        readOnly: ro
-                    },
-                    {
-                        type: "Text",
-                        label: "Flight Details",
-                        placeholder: "",
-                        readOnly: ro
-                    }
-                ]
-                break
-            case (1):
-                if (state.id === info.Handler.id) {
-                    ro = false;
-                    tempState = [
-                        {
-                            type: "DropDown",
-                            options: ["Awaiting Arrival", "Searching for Flight Volunteer"],
-                            label: "Status",
-                            select: (item) => {
-                                // let tempform = [...formInfo]
-                                // tempform[1].placeholder = item;
-                                // setFormInfo(tempform)
-                            },
-                            placeholder: "Select Status",
-                            readOnly: false
-                        },
-                        {
-                            type: "Text",
-                            label: "Adopters",
-                            placeholder: "",
-                            readOnly: ro
-                        },
-                        {
-                            type: "DropDown",
-                            options: ["Jenny", "Tim", "Sam"],
-                            label: "Handler",
-                            select: (item) => {
-                                // let tempform = [...formInfo]
-                                // tempform[3].placeholder = item;
-                                // setFormInfo(tempform)
-                            },
-                            placeholder: "Select Handler",
-                            readOnly: false
-                        },
-                        {
-                            type: "Date",
-                            label: "Inbound Date",
-                            placeholder: "",
-                            readOnly: ro
-                        },
-                        {
-                            type: "Text",
-                            label: "Flight Details",
-                            placeholder: "",
-                            readOnly: ro
-                        }
-                    ]
-                }
-                else {
-                    ro = true;
-                    tempState = [
-                        {
-                            type: "Text",
-                            label: "Status",
-                            placeholder: "",
-                            readOnly: ro
-                        },
-                        {
-                            type: "Text",
-                            label: "Adopters",
-                            placeholder: "",
-                            readOnly: ro
-                        },
-                        {
-                            type: "Text",
-                            label: "Handler",
-                            placeholder: "",
-                            readOnly: ro
-                        },
-                        {
-                            type: "Date",
-                            label: "Inbound Date",
-                            placeholder: "",
-                            readOnly: ro
-                        },
-                        {
-                            type: "Text",
-                            label: "Flight Details",
-                            placeholder: "",
-                            readOnly: ro
-                        }
-                    ]
-                }
-                break;
-            case (2):
-                ro = false;
-                tempState = [
-                    {
-                        type: "DropDown",
-                        options: ["Awaiting Arrival", "Searching for Flight Volunteer"],
-                        label: "Status",
-                        select: (item) => {
-                            // let tempform = [...formInfo]
-                            // tempform[1].placeholder = item;
-                            // setFormInfo(tempform)
-                        },
-                        placeholder: "Select Status",
-                        readOnly: false
-                    },
-                    {
-                        type: "Text",
-                        label: "Adopters",
-                        placeholder: "",
-                        readOnly: ro
-                    },
-                    {
-                        type: "DropDown",
-                        options: ["Jenny", "Tim", "Sam"],
-                        label: "Handler",
-                        select: (item) => {
-                            // let tempform = [...formInfo]
-                            // tempform[3].placeholder = item;
-                            // setFormInfo(tempform)
-                        },
-                        placeholder: "Select Handler",
-                        readOnly: false
-                    },
-                    {
-                        type: "Date",
-                        label: "Inbound Date",
-                        placeholder: "",
-                        readOnly: ro
-                    },
-                    {
-                        type: "Text",
-                        label: "Flight Details",
-                        placeholder: "",
-                        readOnly: ro
-                    }
-                ]
-                break
-        }
-        return tempState
-    }
-    const setDogList = () => {
+    const sortDogList = () => {
+        let tempDogList;
         tempDogList = [...state.dogList]
+        tempDogList.sort((a, b) => {
+            return a.position - b.position
+        })
+        setDogList(tempDogList)
+    }
+
+    const setDogList = (tempDogList) => {
+
         newDogList = tempDogList.map((dogInfo, k) => {
             let tempState;
             switch (state.adminLevel) {

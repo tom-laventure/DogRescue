@@ -12,6 +12,8 @@ const DogCard = (props) => {
     const [saveOrCancelButtons, setSaveOrCancelButtons] = useState(<div className={classes.saveOrCancelButtons}></div>)
     let contactHandlerButton;
 
+    
+
     useEffect(() => {
         if(dogForm[0].type == "DropDown"){
             dogForm[0].select = (item) => {
