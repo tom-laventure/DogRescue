@@ -5,7 +5,7 @@ import classes from './MessagePage.module.css'
 const MessagePage = () => {
     return (
         <div className={classes.messageContainer}>
-            <MessageApp content={messages} change={setMessages} />
+            <MessageApp />
         </div>
     )
 }

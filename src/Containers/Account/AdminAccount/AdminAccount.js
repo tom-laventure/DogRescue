@@ -2,8 +2,11 @@ import React, {useState} from 'react'
 import classes from './AdminAccount.module.css'
 import FormTemplate from '../../../Components/UI/FormTemplate/FormTemplate'
 import { Button } from 'react-bootstrap'
+import { validFileType } from '../../../Resources/Functions/ImageUpload'
+import DragAndDrop from '../../../Components/UI/DragAndDrop/DragAndDrop'
 
 const AdminAccount = () => {
+    const [dogImage, setDogImage] = useState()
     const [firstForm, setFirstForm] = useState([
         {
             type: "Text",
@@ -47,6 +50,19 @@ const AdminAccount = () => {
             
         }
     ])
+
+    const imageLoad = (files) => {
+        let file = files[0]
+        if (validFileType(file)) {
+            let url = URL.createObjectURL(file)
+            document.getElementById('imageUpload').style.opacity = 0
+            setDogImage({URL: url, File: file})
+        }
+    }
+
+    const resetImage = () => {
+        setDogImage()
+    }
 
     return (
         <div className={classes.container}>

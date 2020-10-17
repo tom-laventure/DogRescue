@@ -14,8 +14,13 @@
 
 .imageDrop{
     height: 150px;
-    width: 200px;
+    width: 150px;
     background-color: azure;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: 2px solid black;
 }
 
 .rightSide{
@@ -30,3 +35,29 @@
     align-items: center;
 }
 
+.hidden{
+    display: none;
+}
+
+.formLabel{
+    background-color: #FFFFFF;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px ridge black;
+    font-size: 0.8rem;
+    height: auto;
+    cursor: pointer;
+}
+
+.image{
+    position: relative;
+    border: 1px solid black;
+}
+
+.image button{
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    background: none;
+    border: none;
+}

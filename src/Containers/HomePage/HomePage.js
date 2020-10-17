@@ -6,7 +6,7 @@ import DogCard from '../../Components/DogCard/DogCard'
 import {setFormTemplateUser, setFormTemplateHandler} from '../../Resources/Functions/SetFormTemplate'
 
 const Homepage = () => {
-    const { state, dispatch, actions, fire } = useContext(StoreContext)
+    const { state, dispatch, actions, firebase } = useContext(StoreContext)
     const [dogCardList, setDogCardList] = useState()
 
     useEffect(() => {

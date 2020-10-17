@@ -2,15 +2,12 @@ import React, { useRef, useState, useContext, useEffect } from 'react';
 import { StoreContext } from '../../Store/StoreContext'
 import classes from './MessageApp.module.css'
 import Message from './Message/Message'
-import 'firebase/firestore';
-
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import TextareaAutosize from 'react-autosize-textarea/lib';
 
 const MessageApp = (props) => {
-    const { state, dispatch, actions, fire, firebase } = useContext(StoreContext)
+    const { state, firebase } = useContext(StoreContext)
     const [formValue, setFormValue] = useState('')
-    const [theMessages, setTheMessages] = useState([])
     const auth = firebase.auth();
     const firestore = firebase.firestore();
     const messagesRef = firestore.collection('Chat').doc('Groups').collection(auth.currentUser.uid)

@@ -2,17 +2,28 @@ import React, { useContext, useState, useEffect } from 'react'
 import { StoreContext } from '../../Store/StoreContext'
 import FormTemplate from '../UI/FormTemplate/FormTemplate'
 import classes from './DogCard.module.css'
-import img from '../../Resources/img/pup1.jpg'
+import ReactLoading from 'react-loading'
 import { Button } from 'react-bootstrap'
 
 const DogCard = (props) => {
-    const { state, dispatch, actions, fire } = useContext(StoreContext)
+    const { state, dispatch, actions, firebase } = useContext(StoreContext)
     const [dogForm, setDogForm] = useState([...props.info])
     const [changesToForm, setChangesToForm] = useState(false)
+    const [imageLoaded, setImageLoaded] = useState(false)
     const [saveOrCancelButtons, setSaveOrCancelButtons] = useState(<div className={classes.saveOrCancelButtons}></div>)
+    const [dogImage, setDogImage] = useState('')
+    const storageRef = firebase.storage().ref()
+    storageRef.child('DogPhotos/pup1.jpg').getDownloadURL().then((url) => {
+        setDogImage(url);
+    })
     let contactHandlerButton;
 
-    
+    useEffect(() => {
+        if(dogImage !== ''){
+            setImageLoaded(true)
+        }
+    }, [dogImage])
+
 
     useEffect(() => {
         if(dogForm[0].type == "DropDown"){
@@ -20,7 +31,6 @@ const DogCard = (props) => {
                 let dogform = [...dogForm]
                 dogform[0].placeholder = item;
                 setDogForm(dogform)
-                console.log("hres")
             }
         }
         if(dogForm[2].type == "DropDown"){
@@ -28,7 +38,6 @@ const DogCard = (props) => {
                 let dogform = [...dogForm]
                 dogform[2].placeholder = item;
                 setDogForm(dogform)
-                console.log("hres")
             }
         }
     }, [])
@@ -59,7 +68,7 @@ const DogCard = (props) => {
         <div className={classes.card}>
             <div className={classes.cardPhoto}>
                 <p>{props.dogName}</p>
-                <img src={img} width="150px" height="150px" />
+                {imageLoaded ? <img src={dogImage} width="150px" height="150px" />: <div className={classes.placeholder}> <ReactLoading type="spinningBubbles" color="#FFFFFF"/></div>}
             </div>
             <div className={classes.cardDetails}>
                 <FormTemplate content={dogForm} template={2} change={ChangesToDogForm} />

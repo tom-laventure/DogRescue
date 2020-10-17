@@ -29,7 +29,6 @@ class DragAndDrop extends Component {
     e.preventDefault()
     e.stopPropagation()
     this.setState({drag: false})
-    console.log(e)
     if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
       this.props.handleDrop(e.dataTransfer.files)
       e.dataTransfer.clearData()
@@ -80,7 +79,7 @@ class DragAndDrop extends Component {
                 fontSize: 36
               }}
             >
-              <div>drop here :)</div>
+              <div>Drop File Here</div>
             </div>
           </div>
         }

@@ -2,8 +2,11 @@ import React, { useState } from 'react'
 import { Button } from 'react-bootstrap'
 import FormTemplate from '../../../Components/UI/FormTemplate/FormTemplate'
 import classes from './UserAccount.module.css'
+import { validFileType } from '../../../Resources/Functions/ImageUpload'
+import DragAndDrop from '../../../Components/UI/DragAndDrop/DragAndDrop'
 
 const UserAccount = () => {
+    const [dogImage, setDogImage] = useState()
     const [firstForm, setFirstForm] = useState([
         {
             type: "Text",
@@ -88,10 +91,30 @@ const UserAccount = () => {
         },
     ])
 
+    const imageLoad = (files) => {
+        let file = files[0]
+        if (validFileType(file)) {
+            let url = URL.createObjectURL(file)
+            document.getElementById('imageUpload').style.opacity = 0
+            setDogImage({URL: url, File: file})
+        }
+    }
+
+    const resetImage = () => {
+        setDogImage()
+    }
+
     return (
         <form className={classes.container} onSubmit={(e) => e.preventDefault()}>
             <div className={classes.leftSide}>
-                <div className={classes.imageDrop}></div>
+                {dogImage ? <div className={classes.image}><img src={dogImage.URL} height='150px' width='150px' /><button onClick={() => resetImage()}>X</button></div> : <DragAndDrop handleDrop={(e) => imageLoad(e)}>
+                    <div className={classes.imageDrop}>
+                        <p>Drop Image Here</p>
+                        <p>Or</p>
+                        <label className={classes.formLabel} for="imageUpload">Choose File</label>
+                        <input className={classes.hidden} type="file" id="imageUpload" accept="image/png, image/jpeg" onChange={(e) => imageLoad(e.target.files)} />
+                    </div>
+                </DragAndDrop>}
                 <FormTemplate content={thirdForm} template={1} change={setThirdForm} />
             </div>
             <div className={classes.rightSide}>
