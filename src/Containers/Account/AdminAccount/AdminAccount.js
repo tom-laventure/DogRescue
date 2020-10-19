@@ -11,43 +11,42 @@ const AdminAccount = () => {
         {
             type: "Text",
             label: "Name",
-            placeholder: "",
+            value: "",
             readOnly: false
         },
         {
             type: "Tel",
             label: "Phone Number",
-            placeholder: "",
+            value: "",
             readOnly: false
         },
         {
             type: "Tel",
             label: "Alternative Phone Number",
-            placeholder: "",
+            value: "",
             readOnly: false
         },
         {
             type: "Text",
             label: "Address",
-            placeholder: "",
-            readOnly: false
+            value: "",
+            readOnly: false,
         },
         {
             type: "Email",
             label: "Email",
-            placeholder: "Ken@jobs.ca",
+            value: "Ken@jobs.ca",
             readOnly: true,
             transparent: true,
-            changeEmail: true
+            changeEmail: true,
         },
         {
             type: "Password",
             label: "Password",
-            placeholder: "***********",
+            value: "***********",
             readOnly: true,
             transparent: true,
-            changePassword: true
-            
+            changePassword: true,
         }
     ])
 

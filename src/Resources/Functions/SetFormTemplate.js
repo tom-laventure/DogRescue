@@ -4,37 +4,37 @@ const setFormTemplateUser = () => {
         {
             type: "Text",
             label: "Status",
-            placeholder: "",
+            value: "",
             readOnly: ro
         },
         {
             type: "Text",
             label: "Adopters",
-            placeholder: "",
+            value: "",
             readOnly: ro
         },
         {
             type: "Text",
             label: "Handler",
-            placeholder: "",
+            value: "",
             readOnly: true
         },
         {
             type: "Date",
             label: "Inbound Date",
-            placeholder: "",
+            value: "",
             readOnly: ro
         },
         {
             type: "Text",
             label: "Flight Details",
-            placeholder: "",
+            value: "",
             readOnly: ro
         }
     ]
     return tempState
 }
-const setFormTemplateHandler = (formInfo, setFormInfo) => {
+const setFormTemplateHandler = (formInfo) => {
     let ro = false;
     let tempState = [
         {
@@ -43,13 +43,14 @@ const setFormTemplateHandler = (formInfo, setFormInfo) => {
             label: "Status",
             select: () => {
             },
-            placeholder: "",
-            readOnly: false
+            value: "",
+            readOnly: false,
+            placeholder: 'Status'
         },
         {
             type: "Text",
             label: "Adopters",
-            placeholder: "",
+            value: "",
             readOnly: true
         },
         {
@@ -58,19 +59,20 @@ const setFormTemplateHandler = (formInfo, setFormInfo) => {
             label: "Handler",
             select: () => {
             },
-            placeholder: "",
-            readOnly: ro
+            value: "",
+            readOnly: ro,
+            placeholder: 'Handler'
         },
         {
             type: "Date",
             label: "Inbound Date",
-            placeholder: "",
+            value: "",
             readOnly: ro
         },
         {
             type: "Text",
             label: "Flight Details",
-            placeholder: "",
+            value: "",
             readOnly: ro
         }
     ]

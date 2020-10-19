@@ -11,31 +11,31 @@ const UserAccount = () => {
         {
             type: "Text",
             label: "Name",
-            placeholder: "",
+            value: "",
             readOnly: false
         },
         {
             type: "Tel",
             label: "Phone Number",
-            placeholder: "",
+            value: "",
             readOnly: false
         },
         {
             type: "Tel",
             label: "Alternative Phone Number",
-            placeholder: "",
+            value: "",
             readOnly: false
         },
         {
             type: "Text",
             label: "Address",
-            placeholder: "",
+            value: "",
             readOnly: false
         },
         {
             type: "Password",
             label: "Password",
-            placeholder: "***********",
+            value: "***********",
             readOnly: true,
             transparent: true,
             changePassword: true
@@ -46,7 +46,7 @@ const UserAccount = () => {
         {
             type: "Email",
             label: "Email",
-            placeholder: "Ken@jobs.ca",
+            value: "Ken@jobs.ca",
             readOnly: true,
             transparent: true,
             changeEmail: true
@@ -54,21 +54,21 @@ const UserAccount = () => {
         {
             type: "Text",
             label: "Handler",
-            placeholder: "Jenny",
+            value: "Jenny",
             readOnly: true,
             transparent: true
         },
         {
             type: "Text",
             label: "Dog Name",
-            placeholder: "Goofy",
+            value: "Goofy",
             readOnly: true,
             transparent: true
         },
         {
             type: "Text",
             label: "Status",
-            placeholder: "Awaiting Arrival",
+            value: "Awaiting Arrival",
             readOnly: true,
             transparent: true
         },
@@ -78,14 +78,14 @@ const UserAccount = () => {
         {
             type: "Text",
             label: "Inbound Date",
-            placeholder: "10/12/2020",
+            value: "10/12/2020",
             readOnly: true,
             transparent: true
         },
         {
             type: "Text",
             label: "Flight Number",
-            placeholder: "1025 Air Canada",
+            value: "1025 Air Canada",
             readOnly: true,
             transparent: true
         },
@@ -111,7 +111,7 @@ const UserAccount = () => {
                     <div className={classes.imageDrop}>
                         <p>Drop Image Here</p>
                         <p>Or</p>
-                        <label className={classes.formLabel} for="imageUpload">Choose File</label>
+                        <label className={classes.formLabel} htmlFor="imageUpload">Choose File</label>
                         <input className={classes.hidden} type="file" id="imageUpload" accept="image/png, image/jpeg" onChange={(e) => imageLoad(e.target.files)} />
                     </div>
                 </DragAndDrop>}

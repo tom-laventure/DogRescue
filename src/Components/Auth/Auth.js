@@ -9,10 +9,8 @@ import ResetPassword from './ResetPassword/ResetPassword'
 
 
 const Auth = (props) => {
-    const { state, dispatch, actions, fire } = useContext(StoreContext)
     const [view, setView] = useState("login")
     let theView;
-
 
     const switchAuthView = (type, e) => {
         e.preventDefault()

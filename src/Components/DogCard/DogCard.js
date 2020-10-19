@@ -6,7 +6,7 @@ import ReactLoading from 'react-loading'
 import { Button } from 'react-bootstrap'
 
 const DogCard = (props) => {
-    const { state, dispatch, actions, firebase } = useContext(StoreContext)
+    const { state, firebase } = useContext(StoreContext)
     const [dogForm, setDogForm] = useState([...props.info])
     const [changesToForm, setChangesToForm] = useState(false)
     const [imageLoaded, setImageLoaded] = useState(false)
@@ -29,6 +29,7 @@ const DogCard = (props) => {
         if(dogForm[0].type == "DropDown"){
             dogForm[0].select = (item) => {
                 let dogform = [...dogForm]
+                dogform[0].value = item;
                 dogform[0].placeholder = item;
                 setDogForm(dogform)
             }
@@ -36,6 +37,7 @@ const DogCard = (props) => {
         if(dogForm[2].type == "DropDown"){
             dogForm[2].select = (item) => {
                 let dogform = [...dogForm]
+                dogform[2].value = item;
                 dogform[2].placeholder = item;
                 setDogForm(dogform)
             }

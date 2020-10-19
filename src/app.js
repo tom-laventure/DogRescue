@@ -50,7 +50,6 @@ const App = () => {
                 <Route path="/admin-account" component={AdminAccount} />
                 <Route path="/user-account" component={UserAccount} />
                 <Route path="/create-user" component={ApplicantCreation} />
-                {authorized}
                 <Route path="/message" component={authorized} />
                 <Route path="/" component={Homepage} />
             </Switch>

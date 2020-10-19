@@ -11,6 +11,11 @@ const config = {
 };
 
 
+const fileTypes = [
+  "image/jpeg",
+  "image/png",
+];
+
 class Firebase {
   constructor() {
     if (!app.apps.length) {
@@ -18,57 +23,45 @@ class Firebase {
     }
     this.auth = app.auth();
     this.database = app.database()
+    this.storageRef = app.storage().ref()
+    this.firestore = app.firestore()
+    // const messagesRef = this.firestore.collection('Dog Profiles').where("region", "==", "India")
+    // messagesRef.get().then((qs) => {
+    //   qs.forEach(doc => {
+    //     console.log(doc.data())
+    //   })
+    // })
   }
-  
+
   createNewUser = (data, id) => {
     this.database.ref('users/' + id).set(data)
   }
 
-  // createPoll = (data, res) => {
-  //   this.database.ref('polls').push(data).then((i) => {
-  //     this.database.ref('users/' + data.members[0].id).transaction(r => {
-  //       if(r){
-  //         if(!r.groups){
-  //           r.groups = [{id: i.key, name: data.name}]
-  //         }
-  //         else{
-  //           r.groups.push({id: i.key, name: data.name})
-  //         }
-  //       }
-  //       return r
-  //     })
-  //     res(i)
-  //   })
-  // }
+  createDogProfile = (profileInfo, file, callback) => {
+    const messagesRef = this.firestore.collection('Dog Profiles')
 
-  // joinPoll = (data, id) => {
-  //   this.database.ref('polls/' + id).transaction((poll) => {
-  //     if (poll) {
-  //       if(!poll.hasOwnProperty("members")){
-  //         poll.members = []
-  //       }
-  //       poll.members.push(data)
-  //     }
-  //     return poll
-  //   }).catch(err => {
-  //     console.log(err)
-  //   })
-  // }
+    // const query = messagesRef.orderBy('createdAt').limit(25);
+    // const [messages] = useCollectionData(query);
+    let type;
+    if(file.type ===  "image/jpeg"){
+      type = ".jpeg"
+    }
+    else{ 
+      type = '.png'
+    }
 
-  // leavePoll = (data, id) => {
-  //   this.database.ref('polls/' + id).transaction((poll) => {
-  //     if (poll) {
-  //       poll.members = poll.members.filter((i) => i.id !== data.id)
-  //     }
-  //     return poll
-  //   }).catch(err => {
-  //     console.log(err)
-  //   })
-  // }
+    this.storageRef.child('DogPhotos/' + profileInfo.handlerId + profileInfo.createdTime + type).put(file).then((data) => {
+      console.log(data, "success")
+      profileInfo.dogImage = data.metadata.fullPath
+      messagesRef.add(profileInfo).then((data) => {
+        callback({flag: true, doc: data})
+      })
+    }).catch((err) => {
+      console.log(err, "error")
+      callback({flag: false, error: err});
+    })
 
-
-
-
+  }
 
   doCreateUserWithEmailAndPassword = (email, password) => this.auth.createUserWithEmailAndPassword(email, password);
 

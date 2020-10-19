@@ -5,7 +5,7 @@ import { StoreContext } from '../../../../Store/StoreContext'
 import AuxDiv from '../../../../hoc/AuxDiv/AuxDiv'
 import Header from '../../Header/Header'
 const ErrorPopUp = (props) => {
-    const { state, dispatch, actions, fire } = useContext(StoreContext)
+    const { state, actions } = useContext(StoreContext)
     let hide = true;
     let message;
     const errorAcknowledge = () => {

@@ -6,9 +6,9 @@ import DogCard from '../../Components/DogCard/DogCard'
 import {setFormTemplateUser, setFormTemplateHandler} from '../../Resources/Functions/SetFormTemplate'
 
 const Homepage = () => {
-    const { state, dispatch, actions, firebase } = useContext(StoreContext)
+    const { state } = useContext(StoreContext)
     const [dogCardList, setDogCardList] = useState()
-
+    
     useEffect(() => {
         sortDogList()
     }, [state])
@@ -45,7 +45,7 @@ const Homepage = () => {
                     tempState = setFormTemplateHandler()
                     break;
             }
-            console.log(dogInfo)
+
             tempState[0].placeholder = dogInfo.Status;
             tempState[1].placeholder = dogInfo.Adopters.name;
             tempState[2].placeholder = dogInfo.Handler.name;
