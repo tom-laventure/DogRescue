@@ -136,14 +136,15 @@ const ApplicantCreation = (props) => {
             let dogProfileDetails = {
                 email: formInfo[0].value,
                 status: formInfo[1].value,
-                adoptersName: formInfo[2].value,
+                dogName: formInfo[2].value,
                 handler: formInfo[3].value,
                 region:  formInfo[4].value,
                 inboundDate: secondFormInfo[0].value,
                 flightDetails: secondFormInfo[1].value,
                 createdTime: time,
                 handlerId: state.user.uid,
-                dogImage: ''
+                dogImage: '',
+                adoptersName: '',
             }
 
            fire.createDogProfile(dogProfileDetails, dogImage.File, accountCreated)
@@ -158,7 +159,7 @@ const ApplicantCreation = (props) => {
             actions.setErrorState(result.error)
         }
     }
-    console.log(props)
+
     return (
         <form className={classes.container} onSubmit={(e) => submit(e)}>
             <div className={classes.leftSide}>

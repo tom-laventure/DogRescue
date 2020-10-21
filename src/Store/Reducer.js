@@ -5,6 +5,7 @@ const initialState = {
     error: null,
     adminLevel: 1,
     id: "122",
+    currentRegion:'South Korea',
     dogList: [
         {
             position: 1,

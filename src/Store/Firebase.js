@@ -25,12 +25,20 @@ class Firebase {
     this.database = app.database()
     this.storageRef = app.storage().ref()
     this.firestore = app.firestore()
-    // const messagesRef = this.firestore.collection('Dog Profiles').where("region", "==", "India")
-    // messagesRef.get().then((qs) => {
-    //   qs.forEach(doc => {
-    //     console.log(doc.data())
-    //   })
-    // })
+  }
+
+  getDogWaitList = (region, callback) => {
+    const messagesRef = this.firestore.collection('Dog Profiles').where("region", "==", region).orderBy('position')
+    const dogRegionCount = this.firestore.collectionGroup('Dog Profiles').where("region", "==", 'South Korea')
+
+    let temp = [];
+
+    messagesRef.get().then((qs) => {
+      qs.forEach(doc => {
+        temp.push(doc.data())
+      })
+      callback(temp)
+    })
   }
 
   createNewUser = (data, id) => {
@@ -39,27 +47,69 @@ class Firebase {
 
   createDogProfile = (profileInfo, file, callback) => {
     const messagesRef = this.firestore.collection('Dog Profiles')
+    const dogRegionCount = this.firestore.collection('Region Count').doc(profileInfo.region)
+    let tempProfileId = profileInfo.createdTime + profileInfo.handlerId
+    dogRegionCount.get().then((doc) => {
+      if (doc.exists) {
+        let newWaitlist = doc.data().waitList.concat([tempProfileId])
+        dogRegionCount.update('waitList', newWaitlist)
+      }
+      else {
+        dogRegionCount.set({ waitList: [tempProfileId] })
+      }
+    })
 
-    // const query = messagesRef.orderBy('createdAt').limit(25);
-    // const [messages] = useCollectionData(query);
     let type;
-    if(file.type ===  "image/jpeg"){
+    if (file.type === "image/jpeg") {
       type = ".jpeg"
     }
-    else{ 
+    else {
       type = '.png'
     }
 
     this.storageRef.child('DogPhotos/' + profileInfo.handlerId + profileInfo.createdTime + type).put(file).then((data) => {
       console.log(data, "success")
       profileInfo.dogImage = data.metadata.fullPath
-      messagesRef.add(profileInfo).then((data) => {
-        callback({flag: true, doc: data})
+      messagesRef.doc(tempProfileId).set(profileInfo).then((data) => {
+        callback({ flag: true, doc: data })
       })
     }).catch((err) => {
       console.log(err, "error")
-      callback({flag: false, error: err});
+      callback({ flag: false, error: err });
     })
+
+  }
+
+  getProfileInfo = (id, callback) => {
+    const profileRef = this.firestore.collection('Dog Profiles').doc(id)
+    profileRef.get().then(doc => {
+      console.log(doc.data())
+      callback(doc.data())
+    })
+  }
+
+  getProfileImage = (ref, callback) => {
+    this.storageRef.child(ref).getDownloadURL().then((url) => {
+      callback({ URL: url })
+    })
+  }
+
+  confirmDogProfile = (profileInfo, oldRef, uid, callback) => {
+    const regionRef = this.firestore.collection('Region Count').doc(profileInfo.region)
+    const dogProfileRef = this.firestore.collection('Dog Profiles')
+    regionRef.get().then((doc) => {
+      let tempList = [...doc.data().waitList]
+      let index = tempList.indexOf(oldRef)
+      tempList[index] = uid
+      regionRef.set({waitList: tempList}).then(() => {
+        dogProfileRef.doc(oldRef).delete().then(() => {
+          dogProfileRef.doc(uid).set(profileInfo).then(() => {
+            console.log("you fucking did it!!!!!!")
+          })
+        })
+      })
+    })
+
 
   }
 

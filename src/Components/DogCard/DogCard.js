@@ -13,7 +13,7 @@ const DogCard = (props) => {
     const [saveOrCancelButtons, setSaveOrCancelButtons] = useState(<div className={classes.saveOrCancelButtons}></div>)
     const [dogImage, setDogImage] = useState('')
     const storageRef = firebase.storage().ref()
-    storageRef.child('DogPhotos/pup1.jpg').getDownloadURL().then((url) => {
+    storageRef.child('DogPhotos/krlj9E1yjrd2O75Bd4KE4FwrHdc21603133881321.jpeg').getDownloadURL().then((url) => {
         setDogImage(url);
     })
     let contactHandlerButton;

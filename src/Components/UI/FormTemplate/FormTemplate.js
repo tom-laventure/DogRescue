@@ -29,22 +29,22 @@ const FormTemplate = (props) => {
 
     const setInputType = (info, iterator) => {
         let transparent;
-        let required = false;
+        let required = true;
+        if('required' in info){
+            required = info.required
+        }
         if ("transparent" in info) {
             transparent = c1.makebackgroundTransparent
-        }
-        if('required' in info && info.required === true){
-            
         }
         switch (info.type) {
             case "Text":
                 if (!("checkbox" in info)) {
-                    return <input id={info.label} name={info.label} type={info.type} value={info.value} readOnly={info.readOnly} className={classes.formText + " " + transparent} onChange={(e) => change(e, iterator)} required/>
+                    return <input id={info.label} id={info.label} name={info.label} type={info.type} value={info.value} readOnly={info.readOnly} className={classes.formText + " " + transparent} onChange={(e) => change(e, iterator)} required={required}/>
                 }
                 else {
                     return (
                         <div className={classes.dateCheckboxDiv}>
-                            <input id={info.label} name={info.label} type={info.type} value={info.value} readOnly={info.readOnly} className={classes.date} onChange={(e) => change(e, iterator)} required/>
+                            <input id={info.label} id={info.label} name={info.label} type={info.type} value={info.value} readOnly={info.readOnly} className={classes.date} onChange={(e) => change(e, iterator)} required={required}/>
                             <InputGroup className={classes.checkbox}>
                                 <p>Date Unnown</p>
                                 <InputGroup.Checkbox onChange={(e) => info.checkBoxClick(e)} />
@@ -70,7 +70,7 @@ const FormTemplate = (props) => {
                 let r;
                 if (info.checkbox) {
                     r = (<div className={classes.dateCheckboxDiv}>
-                        <input id={info.label} name={info.label} type={info.type} value={info.value} readOnly={info.readOnly} className={classes.date} onChange={(e) => change(e, iterator)} required/>
+                        <input id={info.label} name={info.label} type={info.type} value={info.value} readOnly={info.readOnly} className={classes.date} onChange={(e) => change(e, iterator)} required={required}/>
                         <InputGroup className={classes.checkbox}>
                             <p>Date Unknown</p>
                             <InputGroup.Checkbox onChange={(e) => info.checkBoxClick(e)} />
@@ -78,7 +78,7 @@ const FormTemplate = (props) => {
                     </div>)
                 }
                 else {
-                    r = <input id={info.label} name={info.label} type={info.type} value={info.value} readOnly={info.readOnly} className={classes.formText + " " + transparent} onChange={(e) => change(e, iterator)} required/>
+                    r = <input id={info.label} name={info.label} type={info.type} value={info.value} readOnly={info.readOnly} className={classes.formText + " " + transparent} onChange={(e) => change(e, iterator)} required={required}/>
                 }
                 return r
             case "Password":
@@ -86,32 +86,33 @@ const FormTemplate = (props) => {
                 if ("changePassword" in info) {
                     if (info.changePassword == true) {
                         p = (<div className={classes.passwordWithLink}>
-                            <input id={info.label} name={info.label} type={info.type} value={info.value} readOnly={info.readOnly} className={classes.formText + " " + transparent} onChange={(e) => change(e, iterator)} required/>
+                            <input id={info.label} name={info.label} type={info.type} value={info.value} readOnly={info.readOnly} className={classes.formText + " " + transparent} onChange={(e) => change(e, iterator)} required={required}/>
                             <a href="/Change-Password">Change Password</a>
                         </div>)
                     }
                 }
                 else {
-                    p = <input id={info.label} name={info.label} type={info.type} value={info.value} readOnly={info.readOnly} className={classes.formText + " " + transparent} onChange={(e) => change(e, iterator)} required/>
+                    p = <input id={info.label} name={info.label} type={info.type} value={info.value} readOnly={info.readOnly} className={classes.formText + " " + transparent} onChange={(e) => change(e, iterator)} required={required}/>
                 }
                 return p
             case "Email":
                 let e;
                 if ("changeEmail" in info) {
                     e = (<div className={classes.passwordWithLink}>
-                        <input id={info.label} name={info.label} type={info.type} value={info.value} readOnly={info.readOnly} className={classes.formText + " " + transparent} onChange={(e) => change(e, iterator)} required/>
+                        <input id={info.label} name={info.label} type={info.type} value={info.value} readOnly={info.readOnly} className={classes.formText + " " + transparent} onChange={(e) => change(e, iterator)} required={required}/>
                         <a href="/Change-Password">Change Email</a>
                     </div>)
                 }
                 else {
-                    e = <input id={info.label} name={info.label} type={info.type} value={info.value} readOnly={info.readOnly} className={classes.formText + " " + transparent} onChange={(e) => change(e, iterator)} required/>
+                    e = <input id={info.label} name={info.label} type={info.type} value={info.value} readOnly={info.readOnly} className={classes.formText + " " + transparent} onChange={(e) => change(e, iterator)} required={required}/>
                 }
                 return e
             case "Tel":
-                let t = <input type="tel" id="phone" name="phone" className={classes.formText + " " + transparent} pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required />
+                let t = <input type="tel" id={info.label} name="phone" className={classes.formText + " " + transparent}  required={required} />
+                // pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                 return t;
             default:
-                return <input id={info.label} name={info.label} type={info.type} value={info.value} readOnly={info.readOnly} className={classes.formText + " " + transparent} onChange={(e) => change(e, iterator)} required/>
+                return <input id={info.label} name={info.label} type={info.type} value={info.value} readOnly={info.readOnly} className={classes.formText + " " + transparent} onChange={(e) => change(e, iterator)} required={required}/>
         }
     }
 

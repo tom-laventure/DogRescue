@@ -5,6 +5,7 @@ import { StoreContext } from './Store/StoreContext'
 import Layout from './hoc/Layout/Layout';
 import Auth from './Components/Auth/Auth';
 import ApplicantCreation from './Containers/ApplicantCreation/ApplicantCreation';
+import ApplicantConfirmation from './Containers/ApplicantCreation/ApplicantConfirmation/ApplicantConfirmation';
 import UserAccount from './Containers/Account/UserAccount/UserAccount';
 import AdminAccount from './Containers/Account/AdminAccount/AdminAccount';
 import MessagePage from './Containers/MessagePage/MessagePage';
@@ -51,6 +52,7 @@ const App = () => {
                 <Route path="/user-account" component={UserAccount} />
                 <Route path="/create-user" component={ApplicantCreation} />
                 <Route path="/message" component={authorized} />
+                <Route path="/confirm-account/:profileId" component={ApplicantConfirmation}/>
                 <Route path="/" component={Homepage} />
             </Switch>
         </Layout>
