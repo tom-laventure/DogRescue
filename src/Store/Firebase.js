@@ -25,19 +25,33 @@ class Firebase {
     this.database = app.database()
     this.storageRef = app.storage().ref()
     this.firestore = app.firestore()
+    this.functions = app.functions()
   }
 
-  getDogWaitList = (region, callback) => {
-    const messagesRef = this.firestore.collection('Dog Profiles').where("region", "==", region).orderBy('position')
-    const dogRegionCount = this.firestore.collectionGroup('Dog Profiles').where("region", "==", 'South Korea')
 
-    let temp = [];
-
-    messagesRef.get().then((qs) => {
-      qs.forEach(doc => {
-        temp.push(doc.data())
+  //retrieves a key array, selects the paginated items required and gets those items
+  getDogWaitList = (region, callback, paginationStart, paginationEnd) => {
+    const dogRef = this.firestore.collection('Dog Profiles')
+    const rescueRef = this.firestore.collection('Rescue List').doc(region)
+    return this.firestore.runTransaction((transaction) => {
+      return transaction.get(rescueRef).then(doc => {
+        if (doc.exists) {
+          let tempList = [...doc.data().waitList]
+          let pagReturn = tempList.slice(paginationStart, paginationEnd)
+          let temp = []
+          let counter = paginationStart;
+          let counterFlag = paginationEnd
+          pagReturn.forEach(item => {
+            dogRef.doc(item).get().then(doc => {
+              counter++;
+              temp.push(doc.data())
+              if (counterFlag === counter) {
+                callback(temp)
+              }
+            })
+          })
+        }
       })
-      callback(temp)
     })
   }
 
@@ -47,37 +61,42 @@ class Firebase {
 
   createDogProfile = (profileInfo, file, callback) => {
     const messagesRef = this.firestore.collection('Dog Profiles')
-    const dogRegionCount = this.firestore.collection('Region Count').doc(profileInfo.region)
+    const dogRegionCount = this.firestore.collection('Rescue List').doc(profileInfo.region)
     let tempProfileId = profileInfo.createdTime + profileInfo.handlerId
-    dogRegionCount.get().then((doc) => {
-      if (doc.exists) {
-        let newWaitlist = doc.data().waitList.concat([tempProfileId])
-        dogRegionCount.update('waitList', newWaitlist)
-      }
-      else {
-        dogRegionCount.set({ waitList: [tempProfileId] })
-      }
-    })
+    return this.firestore.runTransaction(transaction => {
+      return transaction.get(dogRegionCount).then((doc) => {
+        if (doc.exists) {
+          let newWaitlist = doc.data().waitList.concat([tempProfileId])
+          dogRegionCount.update('waitList', newWaitlist)
+        }
+        else {
+          dogRegionCount.set({ waitList: [tempProfileId] })
+        }
+        let type = '.png';
+        if (file.type === "image/jpeg") {
+          type = ".jpeg"
+        }
 
-    let type;
-    if (file.type === "image/jpeg") {
-      type = ".jpeg"
-    }
-    else {
-      type = '.png'
-    }
+        this.storageRef.child('DogPhotos/' + profileInfo.handlerId + profileInfo.createdTime + type).put(file).then((data) => {
+          console.log(data, "success")
+          profileInfo.dogImage = data.metadata.fullPath
+          messagesRef.doc(tempProfileId).set(profileInfo).then((data) => {
+            callback({ flag: true, doc: data, tempID: tempProfileId })
+          })
+        }).catch((err) => {
+          console.log(err, "error")
+          callback({ flag: false, error: err });
 
-    this.storageRef.child('DogPhotos/' + profileInfo.handlerId + profileInfo.createdTime + type).put(file).then((data) => {
-      console.log(data, "success")
-      profileInfo.dogImage = data.metadata.fullPath
-      messagesRef.doc(tempProfileId).set(profileInfo).then((data) => {
-        callback({ flag: true, doc: data })
+        })
       })
-    }).catch((err) => {
-      console.log(err, "error")
-      callback({ flag: false, error: err });
     })
+  }
 
+
+
+  sendEmail = (data) => {
+    let sendEmail = this.functions.httpsCallable('sendEmail')
+    sendEmail(data)
   }
 
   getProfileInfo = (id, callback) => {
@@ -94,23 +113,53 @@ class Firebase {
     })
   }
 
+
   confirmDogProfile = (profileInfo, oldRef, uid, callback) => {
-    const regionRef = this.firestore.collection('Region Count').doc(profileInfo.region)
+    const regionRef = this.firestore.collection('Rescue List').doc(profileInfo.region)
+    const userRef = this.firestore.collection('Users').doc(uid)
     const dogProfileRef = this.firestore.collection('Dog Profiles')
-    regionRef.get().then((doc) => {
-      let tempList = [...doc.data().waitList]
-      let index = tempList.indexOf(oldRef)
-      tempList[index] = uid
-      regionRef.set({waitList: tempList}).then(() => {
-        dogProfileRef.doc(oldRef).delete().then(() => {
-          dogProfileRef.doc(uid).set(profileInfo).then(() => {
-            console.log("you fucking did it!!!!!!")
+    return this.firestore.runTransaction(transaction => {
+      return transaction.get(userRef).then((doc) => {
+        if(doc.exists){
+          let newDogNumber = doc.data().dogNumber + 1
+          regionRef.get().then((doc) => {
+            let tempList = [...doc.data().waitList]
+            let index = tempList.indexOf(oldRef)
+            let newDogProfileID = uid + '$$' + newDogNumber
+            tempList[index] = newDogProfileID
+            userRef.update({dogNumber: newDogNumber})
+            regionRef.set({ waitList: tempList }).then(() => {
+              dogProfileRef.doc(newDogProfileID).set(profileInfo).then(() => {
+                dogProfileRef.doc(oldRef).delete().then(() => {
+                  console.log("great success")
+                })
+              })
+            })
           })
-        })
+        }
+        else{
+          regionRef.get().then((doc) => {
+            let tempList = [...doc.data().waitList]
+            let index = tempList.indexOf(oldRef)
+            let newProfile = {
+              dogNumber: 1,
+              admin: 0
+            }
+            let newDogProfileID = uid + '$$' + newProfile.dogNumber
+            tempList[index] = newDogProfileID
+            userRef.set(newProfile)
+            regionRef.set({ waitList: tempList }).then(() => {
+              dogProfileRef.doc(newDogProfileID).set(profileInfo).then(() => {
+                dogProfileRef.doc(oldRef).delete().then(() => {
+                  console.log("great success 2")
+                })
+              })
+            })
+          })
+        }
+
       })
     })
-
-
   }
 
   doCreateUserWithEmailAndPassword = (email, password) => this.auth.createUserWithEmailAndPassword(email, password);

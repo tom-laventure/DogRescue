@@ -8,22 +8,27 @@ import { setFormTemplateUser, setFormTemplateHandler } from '../../Resources/Fun
 const Homepage = () => {
     const { state, firebase, fire } = useContext(StoreContext)
     const [dogCardList, setDogCardList] = useState()
-    const [dogWaitList, setDogWaitList] = useState()
+    const [dogWaitList, setDogWaitList] = useState([])
 
     // useEffect(() => {
     //     sortDogList()
     // }, [state])
 
+    const setArray = (data) => {
+        setDogWaitList(data)
+    }
+
+    console.log(dogWaitList)
     useEffect(() => {
-        fire.getDogWaitList(state.currentRegion, setDogWaitList)
+        fire.getDogWaitList(state.currentRegion, setArray, 0, 2)
     }, [state.currentRegion])
 
-    useEffect(() => {
-        console.log("here", dogWaitList)
-        if(dogWaitList){
-            setDogList(dogWaitList)
-        }
-    }, [dogWaitList])
+    // useEffect(() => {
+    //     console.log("here", dogWaitList)
+    //     if(dogWaitList){
+    //         // setDogList(dogWaitList)
+    //     }
+    // }, [dogWaitList])
 
     // const sortDogList = () => {
     //     let tempDogList;

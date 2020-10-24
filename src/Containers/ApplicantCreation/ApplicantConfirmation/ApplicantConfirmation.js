@@ -143,7 +143,7 @@ const UserAccount = (props) => {
             confirm_password.setCustomValidity('')
             flag = true
         }
-        let time = new Date().getTime()
+
         let dogProfileDetails = {
             adoptersName: firstForm[0].value,
             phone: firstForm[1].value,

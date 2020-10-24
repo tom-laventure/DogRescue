@@ -152,10 +152,16 @@ const ApplicantCreation = (props) => {
     }
 
     const accountCreated = (result) => {
-        if(result.flag){
+        if (result.flag) {
+            let data = {
+                email: formInfo[0].value,
+                subject: "Invite to Join Dog Waitlist",
+                html: "<div><p>Hi there, you have been invited to join the Dog Rescue Waitlist application</p><br /><p>Click <a href='http://localhost:3000/confirm-account/" + result.tempID + "'>here</a> to create an account and track your dog's position</p></div>"
+            };
+            fire.sendEmail(data)
             props.history.push('/')
         }
-        else{
+        else {
             actions.setErrorState(result.error)
         }
     }

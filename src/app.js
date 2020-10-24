@@ -10,6 +10,8 @@ import UserAccount from './Containers/Account/UserAccount/UserAccount';
 import AdminAccount from './Containers/Account/AdminAccount/AdminAccount';
 import MessagePage from './Containers/MessagePage/MessagePage';
 import Loading from './Containers/Loading/Loading';
+import ConfirmAdminAccount from './Containers/Account/AdminAccount/CreateAdminAccount/ConfirmAdminAccount/ConfirmAdminAccount';
+import CreateAdminAccount from './Containers/Account/AdminAccount/CreateAdminAccount/CreateAdminAccount';
 
 
 const App = () => {
@@ -53,8 +55,11 @@ const App = () => {
                 <Route path="/create-user" component={ApplicantCreation} />
                 <Route path="/message" component={authorized} />
                 <Route path="/confirm-account/:profileId" component={ApplicantConfirmation}/>
+                <Route path="/create-rescue-cordinator" component={CreateAdminAccount}/>
+                <Route path="/confirm-rescue-cordinator/:profileId" component={ConfirmAdminAccount}/>
                 <Route path="/" component={Homepage} />
             </Switch>
+            
         </Layout>
     );
 }
