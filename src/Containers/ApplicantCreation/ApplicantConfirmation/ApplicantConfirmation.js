@@ -149,16 +149,9 @@ const UserAccount = (props) => {
             phone: firstForm[1].value,
             alternatePhone: firstForm[2].value,
             address: firstForm[3].value,
-            email: secondForm[0].value,
-            handler: secondForm[2].value,
-            dogName: secondForm[1].value,
-            status: secondForm[3].value,
-            inboundDate: thirdForm[0].value,
-            flightDetails: thirdForm[1].value,
-            region: thirdForm[2].value,
-            dogImage: dogImage.URL
+            uid: state.user.uid
         }
-        fire.confirmDogProfile(dogProfileDetails, props.match.params.profileId, state.user.uid)
+        fire.confirmDogProfile(dogProfileDetails, props.match.params.profileId)
     }
 
     return (

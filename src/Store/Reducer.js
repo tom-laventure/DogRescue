@@ -3,6 +3,7 @@ const it = "hello"
 const initialState = {
     user: null,
     error: null,
+    authPopUp: false,
     adminLevel: 1,
     id: "122",
     currentRegion:'South Korea',
@@ -31,7 +32,8 @@ const initialState = {
 const types = {
     SET_USER: "SET_USER",
     SET_ERROR: "SET_ERROR",
-    UPDATE_DOGLIST: "UPDATE_DOGLIST"
+    UPDATE_DOGLIST: "UPDATE_DOGLIST",
+    SET_AUTH_POPUP: "SET_AUTH_POPUP"
 }
 
 const Reducer = (state = initialState, action) => {
@@ -39,7 +41,8 @@ const Reducer = (state = initialState, action) => {
         case types.SET_USER:
             return {
                 ...state,
-                user: action.payload
+                user: action.payload,
+                authPopUp: false
             }
         case types.SET_ERROR:
             return {
@@ -50,6 +53,11 @@ const Reducer = (state = initialState, action) => {
             let tempDogList = [...state.dogList]
             return{
 
+            }
+        case types.SET_AUTH_POPUP:
+            return{
+                ...state,
+                authPopUp: action.payload
             }
     }
     return state;

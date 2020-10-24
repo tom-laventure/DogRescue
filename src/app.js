@@ -16,7 +16,7 @@ import CreateAdminAccount from './Containers/Account/AdminAccount/CreateAdminAcc
 
 const App = () => {
     const { state, actions, fire } = useContext(StoreContext)
-    const [auth, setAuth] = useState(false)
+
     let authView;
     let authorized;
     if (state.user !== null) {
@@ -26,24 +26,22 @@ const App = () => {
         authorized = Loading
     }
 
-    fire.authStateChange((user) => {
-        if (!user) {
-            setAuth(true)
-            if (state.user != null) {
-                actions.setCurrentUser(null)
-            }
-        }
-        else {
-            setAuth(false)
-            if (state.user == null) {
-                actions.setCurrentUser(user)
-            }
-        }
-    })
+    // fire.authStateChange((user) => {
+    //     if (!user) {
+    //         if (state.user != null) {
+    //             actions.setCurrentUser(null)
+    //         }
+    //     }
+    //     else {
+    //         if (state.user == null) {
+    //             actions.setCurrentUser(user)
+    //         }
+    //     }
+    // })
 
 
 
-    if (auth) {
+    if (state.authPopUp) {
         authView = <Auth />
     }
     return (

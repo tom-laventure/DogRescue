@@ -13,8 +13,13 @@ export const useActions = (dispatch) => {
         dispatch({type: types.UPDATE_DOGLIST, payload: item})
     }
 
+    const setAuthPopUp = (item) => {
+        dispatch({type: types.SET_AUTH_POPUP, payload: item})
+    }
+
     return{
         setCurrentUser,
-        setErrorState
+        setErrorState,
+        setAuthPopUp
     }
 }

@@ -78,15 +78,12 @@ class Firebase {
         }
 
         this.storageRef.child('DogPhotos/' + profileInfo.handlerId + profileInfo.createdTime + type).put(file).then((data) => {
-          console.log(data, "success")
           profileInfo.dogImage = data.metadata.fullPath
           messagesRef.doc(tempProfileId).set(profileInfo).then((data) => {
             callback({ flag: true, doc: data, tempID: tempProfileId })
           })
         }).catch((err) => {
-          console.log(err, "error")
           callback({ flag: false, error: err });
-
         })
       })
     })
@@ -114,51 +111,10 @@ class Firebase {
   }
 
 
-  confirmDogProfile = (profileInfo, oldRef, uid, callback) => {
-    const regionRef = this.firestore.collection('Rescue List').doc(profileInfo.region)
-    const userRef = this.firestore.collection('Users').doc(uid)
+  confirmDogProfile = (profileInfo, oldRef, callback) => {
     const dogProfileRef = this.firestore.collection('Dog Profiles')
-    return this.firestore.runTransaction(transaction => {
-      return transaction.get(userRef).then((doc) => {
-        if(doc.exists){
-          let newDogNumber = doc.data().dogNumber + 1
-          regionRef.get().then((doc) => {
-            let tempList = [...doc.data().waitList]
-            let index = tempList.indexOf(oldRef)
-            let newDogProfileID = uid + '$$' + newDogNumber
-            tempList[index] = newDogProfileID
-            userRef.update({dogNumber: newDogNumber})
-            regionRef.set({ waitList: tempList }).then(() => {
-              dogProfileRef.doc(newDogProfileID).set(profileInfo).then(() => {
-                dogProfileRef.doc(oldRef).delete().then(() => {
-                  console.log("great success")
-                })
-              })
-            })
-          })
-        }
-        else{
-          regionRef.get().then((doc) => {
-            let tempList = [...doc.data().waitList]
-            let index = tempList.indexOf(oldRef)
-            let newProfile = {
-              dogNumber: 1,
-              admin: 0
-            }
-            let newDogProfileID = uid + '$$' + newProfile.dogNumber
-            tempList[index] = newDogProfileID
-            userRef.set(newProfile)
-            regionRef.set({ waitList: tempList }).then(() => {
-              dogProfileRef.doc(newDogProfileID).set(profileInfo).then(() => {
-                dogProfileRef.doc(oldRef).delete().then(() => {
-                  console.log("great success 2")
-                })
-              })
-            })
-          })
-        }
-
-      })
+    dogProfileRef.doc(oldRef).update(profileInfo).then(() => {
+      console.log("much simpler")
     })
   }
 

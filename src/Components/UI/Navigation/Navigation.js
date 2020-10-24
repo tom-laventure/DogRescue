@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import { StoreContext } from '../../../Store/StoreContext'
@@ -8,12 +8,27 @@ import messageIcon from '../../../Resources/img/email.png'
 
 const TheNav = () => {
     const { state, fire, actions } = useContext(StoreContext)
-
+    const logIn = () => {
+        actions.setAuthPopUp(true)
+    }
     const logOut = () => {
         fire.doSignOut(() => {
             actions.setCurrentUser(null)
         })
     }
+    const [loginState, setLoginState] = useState({ fun: logIn, txt: "Login" })
+
+    useEffect(() => {
+        fire.authStateChange((user) => {
+            if (!user) {
+                setLoginState({ fun: logIn, txt: "Login" })
+            }
+            else {
+                setLoginState({ fun: logOut, txt: "Logout" })
+            }
+        })
+    }, [])
+
     let account;
     if (state.adminLevel === 1) {
         account = <Nav.Link className={classes.navButton} href="/user-account">Account</Nav.Link>
@@ -28,8 +43,8 @@ const TheNav = () => {
             <Nav className="mr-auto"></Nav>
             {account}
             <Nav.Link className={classes.navButton} href="/create-user">Create Applicant</Nav.Link>
-            <Nav.Link className={classes.navButton} variant="dark" onClick={() => logOut()}>Logout</Nav.Link>
-            <Nav.Link className={classes.navButton} href="/message"><img className={classes.icon} src={messageIcon}/></Nav.Link>
+            <Nav.Link className={classes.navButton} variant="dark" onClick={() => loginState.fun()}>{loginState.txt}</Nav.Link>
+            <Nav.Link className={classes.navButton} href="/message"><img className={classes.icon} src={messageIcon} /></Nav.Link>
         </Navbar>
     )
 }

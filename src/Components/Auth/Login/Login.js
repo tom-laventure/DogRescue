@@ -43,7 +43,6 @@ const Login = (props) => {
 
     const login = (e) => {
         e.preventDefault()
-        // fire.addToPoll("-MA---VvMNIpYMCJIzY9")
         fire.doSignInWithEmailAndPassword(userInfo.form.email.value, userInfo.form.password.value).then((data) => {
             actions.setCurrentUser(data.user)
         }
