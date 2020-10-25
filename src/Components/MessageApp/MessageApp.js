@@ -6,7 +6,7 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 import TextareaAutosize from 'react-autosize-textarea/lib';
 
 const MessageApp = (props) => {
-    const { state, firebase } = useContext(StoreContext)
+    const { state, firebase, fire } = useContext(StoreContext)
     const [formValue, setFormValue] = useState('')
     const auth = firebase.auth();
     const firestore = firebase.firestore();
@@ -29,7 +29,7 @@ const MessageApp = (props) => {
         messagesRef.add({
             text: formValue,
             createdAt: timestamp,
-            uid: state.user.uid
+            uid: fire.getCurrentUserID()
         })
         setFormValue('');
     }

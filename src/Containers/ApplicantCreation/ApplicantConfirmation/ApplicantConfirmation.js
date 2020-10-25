@@ -9,7 +9,7 @@ import { withRouter } from 'react-router-dom'
 import Loading from '../../Loading/Loading'
 
 const UserAccount = (props) => {
-    const {state, fire} = useContext(StoreContext)
+    const {state, actions, fire} = useContext(StoreContext)
     const [dogImage, setDogImage] = useState()
     const [firstForm, setFirstForm] = useState([
         {
@@ -143,16 +143,23 @@ const UserAccount = (props) => {
             confirm_password.setCustomValidity('')
             flag = true
         }
-
-        let dogProfileDetails = {
-            adoptersName: firstForm[0].value,
-            phone: firstForm[1].value,
-            alternatePhone: firstForm[2].value,
-            address: firstForm[3].value,
-            uid: state.user.uid
+        if(flag){
+            fire.doCreateUserWithEmailAndPassword(secondForm[0].value, firstForm[4].value).then((data) => {
+                let dogProfileDetails = {
+                    adoptersName: firstForm[0].value,
+                    phone: firstForm[1].value,
+                    alternatePhone: firstForm[2].value,
+                    address: firstForm[3].value,
+                    uid: data.user.uid,
+                    email: secondForm[0].value
+                }
+                fire.confirmDogProfile(dogProfileDetails, props.match.params.profileId)
+            }).catch((error) => {
+                actions.setErrorState(error)
+            })
         }
-        fire.confirmDogProfile(dogProfileDetails, props.match.params.profileId)
     }
+
 
     return (
         <form className={classes.container} onSubmit={(e) => formSubmission(e)}>

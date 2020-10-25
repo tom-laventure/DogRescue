@@ -26,18 +26,19 @@ const App = () => {
         authorized = Loading
     }
 
-    // fire.authStateChange((user) => {
-    //     if (!user) {
-    //         if (state.user != null) {
-    //             actions.setCurrentUser(null)
-    //         }
-    //     }
-    //     else {
-    //         if (state.user == null) {
-    //             actions.setCurrentUser(user)
-    //         }
-    //     }
-    // })
+    //check if there is a user logged in, if so get that users 
+    fire.authStateChange((user) => {
+        if (!user) {
+            if (state.user != null) {
+                actions.setCurrentUser(null)
+            }
+        }
+        else {
+            if (state.user == null) {
+                actions.setCurrentUser(user)
+            }
+        }
+    })
 
 
 

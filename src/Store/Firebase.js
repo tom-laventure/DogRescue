@@ -113,10 +113,20 @@ class Firebase {
 
   confirmDogProfile = (profileInfo, oldRef, callback) => {
     const dogProfileRef = this.firestore.collection('Dog Profiles')
+    const userProfiles = this.firestore.collection('User Profiles')
+    let userInfo = {
+      name: profileInfo.adoptersName,
+      phone: profileInfo.phone,
+      email: profileInfo.email,
+      role: 'Adopter',
+      adminLevel: 0
+    }
     dogProfileRef.doc(oldRef).update(profileInfo).then(() => {
-      console.log("much simpler")
+      userProfiles.doc(profileInfo.uid).set(userInfo)
     })
   }
+
+  getCurrentUserID = () => {return this.auth.currentUser}
 
   doCreateUserWithEmailAndPassword = (email, password) => this.auth.createUserWithEmailAndPassword(email, password);
 

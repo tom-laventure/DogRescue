@@ -3,8 +3,8 @@ import { StoreContext } from '../../../Store/StoreContext';
 import classes from './Message.module.css'
 const Message = (props) => {
     const { text, uid, photoURL } = props.message;
-    const { state } = useContext(StoreContext)
-    const messageClass = uid === state.user.uid ? classes.sent : classes.received;
+    const { state, fire } = useContext(StoreContext)
+    const messageClass = uid === fire.getCurrentUserID() ? classes.sent : classes.received;
     let regex = new RegExp('\\s+')
     let messages = text.split(regex)
 

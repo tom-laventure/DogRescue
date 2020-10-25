@@ -142,7 +142,7 @@ const ApplicantCreation = (props) => {
                 inboundDate: secondFormInfo[0].value,
                 flightDetails: secondFormInfo[1].value,
                 createdTime: time,
-                handlerId: state.user.uid,
+                handlerId: fire.getCurrentUserID(),
                 dogImage: '',
                 adoptersName: '',
             }

@@ -37,6 +37,8 @@ const TheNav = () => {
         account = <Nav.Link className={classes.navButton} href="/admin-account">Account</Nav.Link>
     }
 
+
+
     return (
         <Navbar className={classes.nav} >
             <Navbar.Brand><Link to="/">Dog Rescue</Link></Navbar.Brand>
@@ -44,7 +46,7 @@ const TheNav = () => {
             {account}
             <Nav.Link className={classes.navButton} href="/create-user">Create Applicant</Nav.Link>
             <Nav.Link className={classes.navButton} variant="dark" onClick={() => loginState.fun()}>{loginState.txt}</Nav.Link>
-            <Nav.Link className={classes.navButton} href="/message"><img className={classes.icon} src={messageIcon} /></Nav.Link>
+            {/* <Nav.Link className={classes.navButton} href="/message"><img className={classes.icon} src={messageIcon} /></Nav.Link> */}
         </Navbar>
     )
 }
