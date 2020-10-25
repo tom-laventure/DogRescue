@@ -18,7 +18,6 @@ const Homepage = () => {
         setDogWaitList(data)
     }
 
-    console.log(dogWaitList)
     useEffect(() => {
         fire.getDogWaitList(state.currentRegion, setArray, 0, 2)
     }, [state.currentRegion])

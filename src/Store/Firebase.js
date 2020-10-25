@@ -99,7 +99,6 @@ class Firebase {
   getProfileInfo = (id, callback) => {
     const profileRef = this.firestore.collection('Dog Profiles').doc(id)
     profileRef.get().then(doc => {
-      console.log(doc.data())
       callback(doc.data())
     })
   }
@@ -126,7 +125,31 @@ class Firebase {
     })
   }
 
-  getCurrentUserID = () => {return this.auth.currentUser}
+  getProfileInfo = (uid, callback) => {
+    const userRef = this.firestore.collection('User Profiles').doc(uid)
+    userRef.get().then((doc) => {
+
+      callback(doc.data())
+    })
+  }
+
+  getUsersDogs = (uid, callback) => {
+    const dogRef = this.firestore.collection('Dog Profiles').where('uid', '==', uid)
+    dogRef.get().then(qs => {
+      let temp = []
+      let length = qs.size
+      let flag = 0
+      qs.forEach((doc) => {
+        flag++
+        temp.push(doc.data())
+        if(flag === length){
+          callback(temp)
+        }
+      })
+    })
+  }
+
+  getCurrentUserID = () => { return this.auth.currentUser }
 
   doCreateUserWithEmailAndPassword = (email, password) => this.auth.createUserWithEmailAndPassword(email, password);
 

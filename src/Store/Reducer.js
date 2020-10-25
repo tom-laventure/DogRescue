@@ -5,28 +5,9 @@ const initialState = {
     error: null,
     authPopUp: false,
     adminLevel: 1,
-    id: "122",
     currentRegion:'South Korea',
-    dogList: [
-        {
-            position: 1,
-            UserID: '',
-            DogName: "Goofy",
-            Status: "Awaiting Arrival",
-            DogImg: 'gs://general-auth-4ef43.appspot.com/pup1.jpg',
-            Adopters: {
-                name: "Ken and Sam",
-                id: "123"
-            },
-            Handler: {
-                name:"Jenny",
-                id: "122"
-            },
-            InboundDate: "2020-04-12",
-            FlightDetails: "1425 Air Canada",
-            DateUnkown: false
-        }
-    ]
+    dogList: [],
+    userDogs: []
 }
 
 const types = {

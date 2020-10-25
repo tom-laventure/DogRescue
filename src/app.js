@@ -17,25 +17,35 @@ import CreateAdminAccount from './Containers/Account/AdminAccount/CreateAdminAcc
 const App = () => {
     const { state, actions, fire } = useContext(StoreContext)
 
+    useEffect(() => {
+        if (state.user !== null) {
+            if (state.user.adminLevel === 0) {
+                fire.getUsersDogs(fire.getCurrentUserID().uid, (data) => {
+                    console.log(data)
+                })
+            }
+        }
+    }, [state.user])
+
     let authView;
     let authorized;
-    if (state.user !== null) {
+    if (fire.getCurrentUserID()) {
         authorized = MessagePage
     }
-    else{
+    else {
         authorized = Loading
     }
 
     //check if there is a user logged in, if so get that users 
     fire.authStateChange((user) => {
         if (!user) {
-            if (state.user != null) {
-                actions.setCurrentUser(null)
-            }
+
         }
         else {
             if (state.user == null) {
-                actions.setCurrentUser(user)
+                fire.getProfileInfo(user.uid, (data) => {
+                    actions.setCurrentUser(data)
+                })
             }
         }
     })
@@ -53,12 +63,12 @@ const App = () => {
                 <Route path="/user-account" component={UserAccount} />
                 <Route path="/create-user" component={ApplicantCreation} />
                 <Route path="/message" component={authorized} />
-                <Route path="/confirm-account/:profileId" component={ApplicantConfirmation}/>
-                <Route path="/create-rescue-cordinator" component={CreateAdminAccount}/>
-                <Route path="/confirm-rescue-cordinator/:profileId" component={ConfirmAdminAccount}/>
+                <Route path="/confirm-account/:profileId" component={ApplicantConfirmation} />
+                <Route path="/create-rescue-cordinator" component={CreateAdminAccount} />
+                <Route path="/confirm-rescue-cordinator/:profileId" component={ConfirmAdminAccount} />
                 <Route path="/" component={Homepage} />
             </Switch>
-            
+
         </Layout>
     );
 }
