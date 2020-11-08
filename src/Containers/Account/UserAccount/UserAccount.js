@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Button } from 'react-bootstrap'
 import FormTemplate from '../../../Components/UI/FormTemplate/FormTemplate'
 import classes from './UserAccount.module.css'
 import { validFileType } from '../../../Resources/Functions/ImageUpload'
 import DragAndDrop from '../../../Components/UI/DragAndDrop/DragAndDrop'
+import { StoreContext } from '../../../Store/StoreContext'
 
-const UserAccount = () => {
+const UserAccount = () => { 
+    const { state, actions, fire } = useContext(StoreContext)
     const [dogImage, setDogImage] = useState()
     const [firstForm, setFirstForm] = useState([
         {
@@ -103,6 +105,16 @@ const UserAccount = () => {
     const resetImage = () => {
         setDogImage()
     }
+
+    // fire.authStateChange((auth) => {
+    //     if(auth) {
+    //         console.log("user logged in")
+            
+    //     }
+    //     else{
+    //         console.log("na")
+    //     }
+    // })
 
     return (
         <form className={classes.container} onSubmit={(e) => e.preventDefault()}>

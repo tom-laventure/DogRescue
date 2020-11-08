@@ -63,6 +63,7 @@ class Firebase {
     const messagesRef = this.firestore.collection('Dog Profiles')
     const dogRegionCount = this.firestore.collection('Rescue List').doc(profileInfo.region)
     let tempProfileId = profileInfo.createdTime + profileInfo.handlerId
+    console.log("here")
     return this.firestore.runTransaction(transaction => {
       return transaction.get(dogRegionCount).then((doc) => {
         if (doc.exists) {
@@ -96,7 +97,7 @@ class Firebase {
     sendEmail(data)
   }
 
-  getProfileInfo = (id, callback) => {
+  getTempProfileInfo = async (id, callback) => {
     const profileRef = this.firestore.collection('Dog Profiles').doc(id)
     profileRef.get().then(doc => {
       callback(doc.data())
@@ -110,27 +111,28 @@ class Firebase {
   }
 
 
-  confirmDogProfile = (profileInfo, oldRef, callback) => {
+  confirmDogProfile = async (userProfileInfo, dogProfileInfo, oldRef) => {
     const dogProfileRef = this.firestore.collection('Dog Profiles')
     const userProfiles = this.firestore.collection('User Profiles')
-    let userInfo = {
-      name: profileInfo.adoptersName,
-      phone: profileInfo.phone,
-      email: profileInfo.email,
-      role: 'Adopter',
-      adminLevel: 0
+
+    try{
+      await userProfiles.doc(userProfileInfo.uid).set(userProfileInfo).then((doc) => {
+        console.log('success', doc)
+      }).catch(err => {
+        console.log('err', err)
+      })
+      await dogProfileRef.doc(oldRef).set(dogProfileInfo).catch(err => {
+        console.log('err', err)
+      })
+      return
+    }catch{
+      return "error"
     }
-    dogProfileRef.doc(oldRef).update(profileInfo).then(() => {
-      userProfiles.doc(profileInfo.uid).set(userInfo)
-    })
   }
 
-  getProfileInfo = (uid, callback) => {
+  getUserProfileInfo = async (uid, callback) => {
     const userRef = this.firestore.collection('User Profiles').doc(uid)
-    userRef.get().then((doc) => {
-
-      callback(doc.data())
-    })
+    return await userRef.get()
   }
 
   getUsersDogs = (uid, callback) => {
@@ -142,18 +144,47 @@ class Firebase {
       qs.forEach((doc) => {
         flag++
         temp.push(doc.data())
-        if(flag === length){
+        if (flag === length) {
           callback(temp)
         }
       })
     })
   }
 
-  getCurrentUserID = () => { return this.auth.currentUser }
+  checkIfUserExists = (email) => {
+    return new Promise((resolve, reject) => {
+      this.auth.fetchSignInMethodsForEmail(email).then(data => {
+        console.log(data)
+        let res = false
+        if (data.length > 0) {
+          res = true
+        }
+        resolve(res)
+      }
+      ).catch(err => reject(err))
+    })
+  }
+
+  getCurrentUserID = () => {
+    if (this.auth.currentUser) {
+      return this.auth.currentUser.uid
+    }
+    else {
+      return false
+    }
+  }
 
   doCreateUserWithEmailAndPassword = (email, password) => this.auth.createUserWithEmailAndPassword(email, password);
 
-  doSignInWithEmailAndPassword = (email, password) => this.auth.signInWithEmailAndPassword(email, password);
+  doSignInWithEmailAndPassword = async (email, password) => {
+    let user = await this.auth.signInWithEmailAndPassword(email, password).then((data) => {
+      return data.user
+    });
+    let userInfo = await this.firestore.collection('User Profiles').doc(user.uid).get().then((doc) => {
+      return doc.data()
+    })
+    return userInfo
+  }
 
   doSignOut = (fun) => this.auth.signOut().then(fun);
 

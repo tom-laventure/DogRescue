@@ -43,8 +43,8 @@ const Login = (props) => {
 
     const login = (e) => {
         e.preventDefault()
-        fire.doSignInWithEmailAndPassword(userInfo.form.email.value, userInfo.form.password.value).then((data) => {
-            actions.setCurrentUser(data.user)
+        fire.doSignInWithEmailAndPassword(userInfo.form.email.value, userInfo.form.password.value).then((doc) => {
+            actions.setCurrentUser(doc)
         }
         ).catch((error) => {
             actions.setErrorState(error)

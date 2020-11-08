@@ -1,20 +1,18 @@
-const it = "hello"
-
 const initialState = {
-    user: null,
+    user: {adminLevel: 0, loaded: false, thisIs: 'initial'},
     error: null,
     authPopUp: false,
-    adminLevel: 1,
     currentRegion:'South Korea',
     dogList: [],
-    userDogs: []
+    loading: false
 }
 
 const types = {
     SET_USER: "SET_USER",
     SET_ERROR: "SET_ERROR",
     UPDATE_DOGLIST: "UPDATE_DOGLIST",
-    SET_AUTH_POPUP: "SET_AUTH_POPUP"
+    SET_AUTH_POPUP: "SET_AUTH_POPUP",
+    SET_LOADING: "SET_LOADING"
 }
 
 const Reducer = (state = initialState, action) => {
@@ -23,7 +21,8 @@ const Reducer = (state = initialState, action) => {
             return {
                 ...state,
                 user: action.payload,
-                authPopUp: false
+                authPopUp: false,
+                loading: false
             }
         case types.SET_ERROR:
             return {
@@ -39,6 +38,11 @@ const Reducer = (state = initialState, action) => {
             return{
                 ...state,
                 authPopUp: action.payload
+            }
+        case types.SET_LOADING:
+            return{
+                ...state,
+                laoding: action.payload
             }
     }
     return state;

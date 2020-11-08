@@ -133,30 +133,41 @@ const ApplicantCreation = (props) => {
         let flag3 = dogImage == null
         if (true) {
             let time = new Date().getTime()
+
+
             let dogProfileDetails = {
                 email: formInfo[0].value,
                 status: formInfo[1].value,
                 dogName: formInfo[2].value,
-                handler: formInfo[3].value,
-                region:  formInfo[4].value,
+                handlerName: formInfo[3].value,
+                region: formInfo[4].value,
                 inboundDate: secondFormInfo[0].value,
                 flightDetails: secondFormInfo[1].value,
                 createdTime: time,
                 handlerId: fire.getCurrentUserID(),
-                dogImage: '',
-                adoptersName: '',
+                dogImage: ''
             }
+            fire.createDogProfile(dogProfileDetails, dogImage.File, (res) => {
+                fire.checkIfUserExists(formInfo[0].value).then((flag) => {
+                    console.log(flag, res)
+                    accountCreated(res, flag)
+                })
+            })
 
-           fire.createDogProfile(dogProfileDetails, dogImage.File, accountCreated)
         }
     }
 
-    const accountCreated = (result) => {
+    const accountCreated = (result, res) => {
         if (result.flag) {
+            let body = "<div><p>Hi there, you have been invited to join the Dog Rescue Waitlist application</p><br /><p>Click <a href='http://localhost:3000/confirm-account/" + result.tempID + "'>here</a> to create an account and track your dog's position</p></div>"
+            if (res) {
+                body = "<div><p>Hi there, another dog has been registered to your account</p><br /><p>Click <a href='http://localhost:3000/user-account/" + result.tempID + '/' + res + "'>here</a> to confirm the addition and track your dog's position</p></div>"
+            }
+
             let data = {
                 email: formInfo[0].value,
                 subject: "Invite to Join Dog Waitlist",
-                html: "<div><p>Hi there, you have been invited to join the Dog Rescue Waitlist application</p><br /><p>Click <a href='http://localhost:3000/confirm-account/" + result.tempID + "'>here</a> to create an account and track your dog's position</p></div>"
+                html: body
             };
             fire.sendEmail(data)
             props.history.push('/')

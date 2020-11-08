@@ -17,6 +17,31 @@ const StoreProvider = ({ children }) => {
     }, [state])
     
 
+    useEffect(() => {
+        if (!state.user.loaded && state.user.adminLevel === 0) {
+            fire.getUsersDogs(fire.getCurrentUserID(), (data) => {
+                console.log("get users dogs", data)
+            })
+        }
+
+        //check if there is a user logged in, if so get that users 
+        fire.authStateChange((user) => {
+            if (!user && !state.user.loaded) {
+                actions.setCurrentUser({ adminLevel: 0, loaded: true })
+            }
+            else if (!state.user.loaded) {
+                fire.getUserProfileInfo(user.uid).then((doc) => {
+                    if (doc.data() !== undefined) {
+                        actions.setCurrentUser(doc.data())
+                    }
+                    else {
+                        actions.setCurrentUser({ adminLevel: 0, loaded: true })
+                    }
+                })
+            }
+        })
+    }, [state.user])
+    
 
     return (
         <StoreContext.Provider value={{ state, dispatch, actions, fire, firebase }}>

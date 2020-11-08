@@ -17,9 +17,14 @@ export const useActions = (dispatch) => {
         dispatch({type: types.SET_AUTH_POPUP, payload: item})
     }
 
+    const setLoading = (item) => {
+        dispatch({type: types.SET_LOADING, payload: item})
+    }
+
     return{
         setCurrentUser,
         setErrorState,
-        setAuthPopUp
+        setAuthPopUp,
+        setLoading
     }
 }

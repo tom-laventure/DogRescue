@@ -12,45 +12,39 @@ import MessagePage from './Containers/MessagePage/MessagePage';
 import Loading from './Containers/Loading/Loading';
 import ConfirmAdminAccount from './Containers/Account/AdminAccount/CreateAdminAccount/ConfirmAdminAccount/ConfirmAdminAccount';
 import CreateAdminAccount from './Containers/Account/AdminAccount/CreateAdminAccount/CreateAdminAccount';
-
+import './app.css'
+import PrivateRoute from './Components/Routes/PrivateRoute';
 
 const App = () => {
     const { state, actions, fire } = useContext(StoreContext)
 
-    useEffect(() => {
-        if (state.user !== null) {
-            if (state.user.adminLevel === 0) {
-                fire.getUsersDogs(fire.getCurrentUserID().uid, (data) => {
-                    console.log(data)
-                })
-            }
-        }
-    }, [state.user])
+
+    // useEffect(() => {
+    //     if (!state.user.loaded && state.user.adminLevel === 0) {
+    //         fire.getUsersDogs(fire.getCurrentUserID(), (data) => {
+    //             console.log("get users dogs", data)
+    //         })
+    //     }
+
+    //     //check if there is a user logged in, if so get that users 
+    //     fire.authStateChange((user) => {
+    //         if (!user && !state.user.loaded) {
+    //             actions.setCurrentUser({ adminLevel: 0, loaded: true })
+    //         }
+    //         else if (!state.user.loaded) {
+    //             fire.getUserProfileInfo(user.uid).then((doc) => {
+    //                 if (doc.data() !== undefined) {
+    //                     actions.setCurrentUser(doc.data())
+    //                 }
+    //                 else {
+    //                     actions.setCurrentUser({ adminLevel: 0, loaded: true })
+    //                 }
+    //             })
+    //         }
+    //     })
+    // }, [state.user])
 
     let authView;
-    let authorized;
-    if (fire.getCurrentUserID()) {
-        authorized = MessagePage
-    }
-    else {
-        authorized = Loading
-    }
-
-    //check if there is a user logged in, if so get that users 
-    fire.authStateChange((user) => {
-        if (!user) {
-
-        }
-        else {
-            if (state.user == null) {
-                fire.getProfileInfo(user.uid, (data) => {
-                    actions.setCurrentUser(data)
-                })
-            }
-        }
-    })
-
-
 
     if (state.authPopUp) {
         authView = <Auth />
@@ -58,17 +52,17 @@ const App = () => {
     return (
         <Layout>
             {authView}
-            <Switch>
-                <Route path="/admin-account" component={AdminAccount} />
-                <Route path="/user-account" component={UserAccount} />
-                <Route path="/create-user" component={ApplicantCreation} />
-                <Route path="/message" component={authorized} />
-                <Route path="/confirm-account/:profileId" component={ApplicantConfirmation} />
-                <Route path="/create-rescue-cordinator" component={CreateAdminAccount} />
-                <Route path="/confirm-rescue-cordinator/:profileId" component={ConfirmAdminAccount} />
-                <Route path="/" component={Homepage} />
-            </Switch>
-
+            {state.loading ? <Loading /> :
+                <Switch>
+                    <PrivateRoute path="/admin-account" component={AdminAccount} authLevel={1} />
+                    <PrivateRoute path="/user-account" component={UserAccount} authLevel={0} />
+                    <PrivateRoute path="/create-user" component={ApplicantCreation} authLevel={1} />
+                    <Route path="/message" component={MessagePage} />
+                    <Route path="/confirm-account/:profileId" component={ApplicantConfirmation} />
+                    <PrivateRoute path="/create-rescue-cordinator" component={CreateAdminAccount} />
+                    <Route path="/confirm-rescue-cordinator/:profileId" component={ConfirmAdminAccount} />
+                    <Route path="/" component={Homepage} />
+                </Switch>}
         </Layout>
     );
 }

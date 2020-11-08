@@ -14,6 +14,8 @@ const Homepage = () => {
     //     sortDogList()
     // }, [state])
 
+
+
     const setArray = (data) => {
         setDogWaitList(data)
     }
@@ -41,7 +43,7 @@ const Homepage = () => {
     const setDogList = (tempDogList) => {
         let newDogList = tempDogList.map((dogInfo, k) => {
             let tempState;
-            switch (state.adminLevel) {
+            switch (state.user.adminLevel ) {
                 case 0:
                     tempState = setFormTemplateUser()
                     break;

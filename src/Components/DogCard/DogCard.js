@@ -63,7 +63,7 @@ const DogCard = (props) => {
         setDogForm(form)
     }
 
-    if (state.adminLevel === 0) {
+    if (state.user.adminLevel  === 0) {
         contactHandlerButton = <button className={classes.contactButton}>Contact Handler</button>
     }
     return (
